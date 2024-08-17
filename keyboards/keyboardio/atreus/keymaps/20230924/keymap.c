@@ -30,6 +30,9 @@
 #define UNUM    14 
 #define COMFN   15
 
+#define CM_JFN  LT(JNUM,KC_ESC)
+#define CM_UFN  LT(UNUM,KC_ESC)
+
 #define LT_USX  LT(URISE,KC_X)
 #define LT_JPX  LT(JRISE,KC_X)
 #define LT_USA  LT(URISE,KC_A)
@@ -75,6 +78,7 @@
 #define MIS_ALT LALT_T(KC_MINS)
 
 #define A_ALT LALT_T(KC_A)
+#define SC_ALT LALT_T(KC_SCLN)
 #define F_CTL LCTL_T(KC_F)
 #define J_CTL LCTL_T(KC_J)
 #define X_CTL LCTL_T(KC_X)
@@ -143,10 +147,11 @@ enum custom_keycodes {
   CM_DOWN,
   CM_SCLT,
   CM_SPFN,
+  CM_SPFN2,
   CM_LISX,
   CM_DOT,
   CM_LISE,
-  CM_ESFN,
+  CM_ESFN
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -156,9 +161,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* win jpkey(QMK)  GUI(command)   CTL(control)   ALT(option)                                   */
     /***********************************************************************************************/
     KC_Q,      KC_W,     KC_E,     KC_R,     KC_T,                       KC_Y,      KC_U,     KC_I,     KC_O,    KC_P,
-    A_ALT,     KC_S,     KC_D,     F_CTL,    G_GUI,                      H_GUI,     J_CTL,    KC_K,     KC_L,    CM_SCLT,//CM_SCLT,
+    A_ALT,     KC_S,     KC_D,     F_CTL,    G_GUI,                      H_GUI,     J_CTL,    KC_K,     KC_L,    SC_ALT,//CM_SCLT,
     CM_SHTZ,   X_CTL,    KC_C,     KC_V,     KC_B,    KC_BTN1, CM_SF10,  KC_N,      KC_M,     KC_COMM,  DT_CTL,  CM_SJSS,
-    KC_LGUI,   KC_LALT,  KC_LSFT,  CM_SPFN,  CM_LISE, KC_LCTL, KC_LALT,  CM_SPFN,   CM_LISE,  KC_LSFT,  KC_LALT, MO_COMFN),   
+    KC_LGUI,   KC_LALT,  KC_LSFT,  CM_SPFN2,  CM_LISE, KC_LCTL, KC_LALT,  CM_SPFN,   CM_JFN,  KC_LSFT,  KC_LALT, MO_COMFN),   
 
   [UBASE] = LAYOUT( /* Qwerty mac uskey */
     /***********************************************************************************************/
@@ -169,9 +174,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // [vmware]            mac_F14 -> win_GUI+e                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     // [vmware]            mac_F13 -> win_F2
     KC_Q,      KC_W,     KC_E,     KC_R,     KC_T,                       KC_Y,      KC_U,     KC_I,     KC_O,    KC_P,
-    A_ALT,     KC_S,     KC_D,     F_CTL,    G_GUI,                      H_GUI,     J_CTL,    KC_K,     KC_L,    CM_SCLT,//CM_SCLT,
+    A_ALT,     KC_S,     KC_D,     F_CTL,    G_GUI,                      H_GUI,     J_CTL,    KC_K,     KC_L,    SC_ALT,//CM_SCLT,
     CM_SHTZ,   X_CTL,    KC_C,     KC_V,     KC_B,    KC_BTN1, CM_SF10,  KC_N,      KC_M,     KC_COMM,  DT_CTL,  CM_SUSS,
-    KC_LGUI,   KC_LALT,  KC_LSFT,  CM_SPFN,  CM_LISE, KC_LCTL, KC_LALT,  CM_SPFN,   CM_LISE,  KC_LSFT,  KC_LALT, MO_COMFN),   
+    KC_LGUI,   KC_LALT,  KC_LSFT,  CM_SPFN2,  CM_LISE, KC_LCTL, KC_LALT,  CM_SPFN,   CM_UFN,  KC_LSFT,  KC_LALT, MO_COMFN),   
 
     /**********************************************************************************************/
     //   !       @      #     $    %        ||       &     *     (    )    -                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
@@ -181,13 +186,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     JP_EXLM,   JP_AT,     JP_HASH, JP_DLR,    JP_PERC,                    JP_AMPR,  JP_ASTR,  JP_LPRN, JP_RPRN, JP_MINS,  
     JP_UNDS,   JP_PLUS,   JP_EQL,  JP_ASTR,   JP_CIRC,                    JP_LCBR,  JP_RCBR,  JP_LBRC, JP_RBRC, JP_COLN,  
     JP_BSLS,   JP_AMPR,   JP_PIPE, JP_TILD,   JP_GRV,   _______, _______, JP_QUOT,  JP_DQUO,  JP_LABK, JP_RABK, JP_QUES,   
-    _______,   _______,   _______, _______,   _______,  _______, _______, _______,  _______,  _______, _______, _______ ),
+    _______,   _______,   _______, _______,   _______,  _______, _______, KC_LCTL,  KC_LALT,  _______, _______, _______ ),
 
    [URISE] = LAYOUT( 
     KC_EXLM,   KC_AT,     KC_HASH, KC_DLR,    KC_PERC,                    KC_AMPR,  KC_ASTR,  KC_LPRN, KC_RPRN, KC_MINS,  
     KC_UNDS,   KC_PLUS,   KC_EQL,  KC_ASTR,   KC_CIRC,                    KC_LCBR,  KC_RCBR,  KC_LBRC, KC_RBRC, KC_COLN,  
     KC_BSLS,   KC_AMPR,   KC_PIPE, KC_TILD,   KC_GRV,   _______, _______, KC_QUOT,  KC_DQUO,  KC_LABK, KC_RABK, KC_QUES,   
-    _______,   _______,   _______, _______,   _______,  _______, _______, _______,  _______,  _______, _______, _______  ),
+    _______,   _______,   _______, _______,   _______,  _______, _______, KC_LCTL,  KC_LALT,  _______, _______, _______  ),
 
 //**********************************************************
 
@@ -195,13 +200,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     CM_GUIE,   CM_ALT4,   LT_JLEF, CM_GUIT,   CM_WSCS,                    _______,  KC_HOME,  KC_UP,    KC_END,  JP_MINS,
     KC_LALT,   KC_LSFT,   KC_DEL,  MO_HYPS,   KC_TAB,                     KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT, KC_ENT,
     KC_1,      KC_2,      KC_3,    KC_4,      KC_5,     _______, _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
-    _______,   _______,   _______, _______,   _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
+    _______,   _______,   _______, KC_LALT,   KC_LCTL,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
   [USPFN] = LAYOUT( /* [> SPFN <] */
     CM_GUIE,   CM_ALT4,   LT_ULEF, CM_GUIT,   CM_WSCS,                    _______,  KC_HOME,  KC_UP,    KC_END,  KC_MINS,
     KC_LALT,   KC_LSFT,   KC_DEL,  MO_HYPS,   KC_TAB,                     KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT, KC_ENT,
     KC_1,      KC_2,      KC_3,    KC_4,      KC_5,     _______, _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
-    _______,   _______,   _______, _______,   _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
+    _______,   _______,   _______, KC_LALT,   KC_LCTL,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
    [JLEF] = LAYOUT( /* [> MO_JLEF <] */
     _______,   _______, _______, _______, _______,                    _______,  CM_CHOM,  KC_PGUP,  CM_CEND, _______,
@@ -221,15 +226,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
   [JNUM] = LAYOUT(
-    _______,   _______, _______, _______, _______,                    _______,  _______,  _______,  _______, _______,
-    KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,                      _______,  _______,  CM_JHNZ,  _______, _______,
-    KC_F6,     KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  _______, _______,  _______,  _______,  _______, _______,
+    _______,   _______, _______, _______, _______,                    DF_UBAS,  _______,  _______,  _______, QK_BOOT,
+    KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,                      _______,  KC_BTN1,  CM_SF10,  _______, _______,
+    KC_F6,     KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  _______, _______,  _______,  _______,  _______, KC_LSFT,
     QK_BOOT,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
   [UNUM] = LAYOUT( 
-    _______,   _______, _______, _______, _______,                    _______,  _______,  _______,  _______, _______,
-    KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,                      _______,  _______,  CM_JHNZ,  _______, _______,
-    KC_F6,     KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  _______, _______,  _______,  _______,  _______, _______,
+    _______,   _______, _______, _______, _______,                    DF_UBAS,  _______,  _______,  _______, QK_BOOT,
+    KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,                      _______,  KC_BTN1,  CM_SF10,  _______, _______,
+    KC_F6,     KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  _______, _______,  _______,  _______,  _______, KC_LSFT,
     QK_BOOT,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
   [COMFN] = LAYOUT( /* [> MO_HYPS <] */
@@ -366,26 +371,26 @@ static uint16_t sclt_pressed_time = 0;
 
 //上関数のIMEON/OFF切り替え専用
 //TODO 汎用的な関数を引数に取れるようにすること(関数アドレス)
-// static void user_lt_hnzn(keyrecord_t *record, int layer, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
-//       if (record->event.pressed) {
-//         *modifier_pressed_time = record->event.time;
-//         *modifier_pressed = true;
-//         layer_on(layer);
-//       } else {
-//         layer_off(layer);
-//         if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
-//          if (get_highest_layer(default_layer_state)==JBASE){
-//              SEND_STRING(SS_LALT("`"));
-//          }else{
-//              SEND_STRING(SS_LCTL(" "));
-//              //VM利用時はカラビナでALTGRAVに置き換えて解釈
-//              //(VM利用時はカラビナでCNTLがまずcontrol->command command->controlとなる
-//              //　つぎにーカラビナでCommand+SPAVEであればALT+GRAVに変換）             
-//          }
-//         }
-//         *modifier_pressed = false;
-//       }
-// }
+static void user_lt_hnzn(keyrecord_t *record, int layer, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
+      if (record->event.pressed) {
+        *modifier_pressed_time = record->event.time;
+        *modifier_pressed = true;
+        layer_on(layer);
+      } else {
+        layer_off(layer);
+        if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+         if (get_highest_layer(default_layer_state)==JBASE){
+             SEND_STRING(SS_LALT("`"));
+         }else{
+             SEND_STRING(SS_LALT("`"));
+             //VM利用時はカラビナでALTGRAVに置き換えて解釈
+             //(VM利用時はカラビナでCNTLがまずcontrol->command command->controlとなる
+             //　つぎにーカラビナでCommand+SPAVEであればALT+GRAVに変換）             
+         }
+        }
+        *modifier_pressed = false;
+      }
+}
 
 static void user_lt(keyrecord_t *record, int layer, uint16_t keycode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
         if (record->event.pressed) {
@@ -433,6 +438,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         user_lt(record,JSPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false);
       } else {
         user_lt(record,USPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false);
+      }
+      return false;
+      break;
+    case CM_SPFN2:
+      if (get_highest_layer(default_layer_state)==JBASE){
+        user_lt_hnzn(record,JSPFN,&spfn_pressed,&spfn_pressed_time,false);
+      } else {
+        user_lt_hnzn(record,USPFN,&spfn_pressed,&spfn_pressed_time,false);
       }
       return false;
       break;
