@@ -12,6 +12,7 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_jp.h"
+#include "audio.h"
 
 #define JBASE   0
 #define UBASE   1
@@ -45,6 +46,7 @@
 #define CM_ALT4 A(KC_F4)
 #define CM_GUIT G(KC_TAB)
 #define CM_GUIE G(KC_E)
+#define CM_GUIM G(KC_M)
 #define CM_SF10 S(KC_F10)
 #define CM_WSCS G(S(KC_S))
 //#define CM_GUIM G(KC_M)
@@ -73,8 +75,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /***********************************************************************************************/
     KC_Q,      KC_W,     KC_E,     KC_R,     KC_T,                       KC_Y,      KC_U,     KC_I,     KC_O,    KC_P,
     KC_A,      KC_S,     KC_D,     KC_F,     KC_G,                       KC_H,      KC_J,     KC_K,     KC_L,    CM_FNSC,
-    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_BTN1, MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
-    KC_LSFT,   KC_LALT,  KC_LGUI,  CM_SPFN,  CM_LISE, KC_LCTL, KC_LSFT,  CM_SPFN,   CM_LISE,  KC_LGUI,  KC_LALT, KC_RSFT),
+    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_ENT,  MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
+    KC_LSFT,   KC_LALT,  KC_LGUI,  CM_SPFN,  CM_LISE, KC_LCTL, KC_LSFT,  CM_SPFN,   KC_RSFT,  KC_LGUI,  KC_LALT, MO_SYS),
 
   [UBASE] = LAYOUT( /* Qwerty mac uskey */
     /***********************************************************************************************/
@@ -86,8 +88,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // [vmware]            mac_F13 -> win_F2
     KC_Q,      KC_W,     KC_E,     KC_R,     KC_T,                       KC_Y,      KC_U,     KC_I,     KC_O,    KC_P,
     KC_A,      KC_S,     KC_D,     KC_F,     KC_G,                       KC_H,      KC_J,     KC_K,     KC_L,    CM_FNSC,
-    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_BTN1, MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
-    KC_LSFT,   KC_LALT,  KC_LGUI,  CM_SPFN,  CM_LISE, KC_LCTL, KC_LSFT,  CM_SPFN,   CM_LISE,  KC_LGUI,  KC_LALT, KC_RSFT),
+    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_ENT,  MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
+    KC_LSFT,   KC_LALT,  KC_LGUI,  CM_SPFN,  CM_LISE, KC_LCTL, KC_LSFT,  CM_SPFN,   KC_RSFT,  KC_LGUI,  KC_LALT, MO_SYS),
 
     /**********************************************************************************************/
     //   !       @      #     $    %        ||       &     *     (    )    -
@@ -138,6 +140,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  DF_JBAS, DF_UBAS,  _______ )
 
 };
+
+void keyboard_post_init_user(void) {
+    // float song1[][2] = SONG( { 2000.0f, 22 }, { 1000.0f, 18 } );
+    // AUDIO_INIT_DELAYの時間を待機
+    wait_ms(500);
+    audio_init();
+
+    // 初期化後にstartup_songを再生
+    //PLAY_SONG(song1);
+}
 
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record){
     switch (keycode) {
