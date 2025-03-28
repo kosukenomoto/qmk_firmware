@@ -12,7 +12,6 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_jp.h"
-#include "audio.h"
 
 #define JBASE   0
 #define UBASE   1
@@ -123,10 +122,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,   _______,   _______, _______,   _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
   [SPFN2] = LAYOUT( /* [> SPFN <] */
-    CM_GUIE,   CM_ALT4,   LT_EXCL, CM_GUIT,   CM_WSCS,                    KC_WH_U,  _______,  KC_MSUP,  _______, JP_MINS,
+    CM_GUIE,   CM_ALT4,   LT_EXCL, CM_GUIT,   CM_WSCS,                    KC_WH_U,  KC_WH_U,  KC_MSUP,  KC_WH_D, JP_MINS,
     KC_LALT,   KC_LSFT,   KC_DEL,  MO_HYPS,   KC_TAB,                     KC_WH_D,  KC_MSLF,  KC_MSDN,  KC_MSRT, KC_ENT,
     KC_1,      KC_2,      KC_3,    KC_4,      KC_5,     _______, _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
-    _______,   _______,   _______, _______,   _______,  _______, _______, KC_BTN1,  KC_BTN2,  _______,  _______, _______ ),
+    _______,   _______,   _______, _______,   _______,  _______, KC_BTN3, KC_BTN1,  KC_BTN2,  _______,  _______, _______ ),
 
   [EXCL] = LAYOUT( /* [> MO_JLEF <] */
     _______,   _______, _______, _______, _______,                    _______,  CM_CHOM,  KC_PGUP,  CM_CEND, _______,
@@ -153,16 +152,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  DF_JBAS, DF_UBAS,  _______ )
 
 };
-
-void keyboard_post_init_user(void) {
-    // float song1[][2] = SONG( { 2000.0f, 22 }, { 1000.0f, 18 } );
-    // AUDIO_INIT_DELAYの時間を待機
-    wait_ms(500);
-    audio_init();
-
-    // 初期化後にstartup_songを再生
-    //PLAY_SONG(song1);
-}
 
 uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record){
     switch (keycode) {
