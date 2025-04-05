@@ -24,6 +24,7 @@
 #define HYPSPFN 10
 #define FN      13
 #define SYS     14
+#define ALTTAB  15
 
 #define KC_MSDN    KC_MS_DOWN
 #define KC_MSUP    KC_MS_UP
@@ -55,7 +56,9 @@
 #define CM_GUIM G(KC_M)
 #define CM_SF10 S(KC_F10)
 #define CM_WSCS G(S(KC_S))
-//#define CM_GUIM G(KC_M)
+#define CM_GUIM G(KC_M)
+
+#define CM_STAB S(KC_TAB)
 
 #define CM_JHNZ A(KC_GRV)
 //#define CM_UHNZ C(KC_SPC)
@@ -71,7 +74,12 @@ enum custom_keycodes {
   CM_SPFN,
   CM_SPFN2,
   CM_LISE,
-  CM_FNSC
+  CM_FNSC,
+  SW_LSFT,
+  SW_LALT,
+  SW_LCTL,
+  SW_LGUI,
+  SW_ATAB
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -82,8 +90,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /***********************************************************************************************/
     KC_Q,      KC_W,     KC_E,     KC_R,     KC_T,                       KC_Y,      KC_U,     KC_I,     KC_O,    KC_P,
     KC_A,      KC_S,     KC_D,     KC_F,     KC_G,                       KC_H,      KC_J,     KC_K,     KC_L,    CM_FNSC,
-    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_ENT,  MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
-    KC_LSFT,   KC_LALT,  KC_LGUI,  CM_LISE,  CM_SPFN2,KC_LCTL, KC_LSFT,  CM_SPFN,   KC_RSFT,  KC_LGUI,  KC_LALT, MO_SYS),
+    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_DEL,  MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
+    KC_LSFT,   KC_LALT,  KC_LGUI,  KC_LSFT,  CM_SPFN2,KC_LCTL, KC_LSFT,  CM_SPFN,   CM_LISE,  KC_LGUI,  KC_LALT, MO_SYS),
 
   [UBASE] = LAYOUT( /* Qwerty mac uskey */
     /***********************************************************************************************/
@@ -95,8 +103,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // [vmware]            mac_F13 -> win_F2
     KC_Q,      KC_W,     KC_E,     KC_R,     KC_T,                       KC_Y,      KC_U,     KC_I,     KC_O,    KC_P,
     KC_A,      KC_S,     KC_D,     KC_F,     KC_G,                       KC_H,      KC_J,     KC_K,     KC_L,    CM_FNSC,
-    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_ENT,  MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
-    KC_LSFT,   KC_LALT,  KC_LGUI,  CM_LISE,  CM_SPFN2,KC_LCTL, KC_LSFT,  CM_SPFN,   KC_RSFT,  KC_LGUI,  KC_LALT, MO_SYS),
+    KC_Z,      KC_X,     KC_C,     KC_V,     KC_B,    KC_DEL,  MO_SYS,   KC_N,      KC_M,     KC_COMM,  KC_DOT,  KC_SLSH,
+    KC_LSFT,   KC_LALT,  KC_LGUI,  KC_LSFT,  CM_SPFN2,KC_LCTL, KC_LSFT,  CM_SPFN,   CM_LISE,  KC_LGUI,  KC_LALT, MO_SYS),
 
     /**********************************************************************************************/
     //   !       @      #     $    %        ||       &     *     (    )    -
@@ -117,16 +125,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //**********************************************************
 
   [SPFN] = LAYOUT( /* [> SPFN <] */
-    CM_GUIE,   CM_ALT4,   LT_EXCL, CM_GUIT,   CM_WSCS,                    _______,  KC_HOME,  KC_UP,    KC_END,  JP_MINS,
-    KC_LALT,   KC_LSFT,   KC_DEL,  MO_HYPS,   KC_TAB,                     KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT, KC_ENT,
-    KC_1,      KC_2,      KC_3,    KC_4,      KC_5,     _______, _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
+    CM_GUIE,   CM_ALT4,   KC_ESC,  CM_GUIT,   CM_WSCS,                    _______,  KC_HOME,  KC_UP,    KC_END,  JP_MINS,
+    KC_LALT,   SW_LSFT,   LT_EXCL, MO_HYPS,   KC_TAB,                     KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT, KC_ENT,
+    KC_1,      KC_2,      KC_3,    KC_4,      KC_5,     _______,  _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
     _______,   _______,   _______, _______,   _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
   [SPFN2] = LAYOUT( /* [> SPFN <] */
-    CM_GUIE,   CM_ALT4,   LT_EXCL, CM_GUIT,   CM_WSCS,                    KC_WH_U,  _______,  KC_MSUP,  _______, JP_MINS,
-    KC_LALT,   KC_LSFT,   KC_DEL,  MO_HYPS,   KC_TAB,                     KC_WH_D,  KC_MSLF,  KC_MSDN,  KC_MSRT, KC_ENT,
-    KC_1,      KC_2,      KC_3,    KC_4,      KC_5,     _______, _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
-    _______,   _______,   _______, _______,   _______,  _______, _______, KC_BTN1,  KC_BTN2,  _______,  _______, _______ ),
+    CM_GUIE,   CM_ALT4,   KC_ESC,  CM_GUIT,   CM_WSCS,                    _______,  KC_HOME,  KC_UP,    KC_END,  JP_MINS,
+    SW_LALT,   CM_STAB,   SW_ATAB, KC_TAB,    SW_LGUI,                    KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT, KC_ENT,
+    SW_LSFT,   _______,   _______, CM_SF10,   _______,  _______, _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
+    _______,   _______,   _______, _______,   _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
+
+//  [SPFN2] = LAYOUT( /* [> SPFN <] */
+//    CM_GUIE,   CM_ALT4,   LT_EXCL, CM_GUIT,   CM_WSCS,                    KC_WH_U,  _______,  KC_MSUP,  _______, JP_MINS,
+//    KC_LALT,   KC_LSFT,   KC_DEL,  MO_HYPS,   KC_TAB,                     KC_WH_D,  KC_MSLF,  KC_MSDN,  KC_MSRT, KC_ENT,
+//    KC_1,      KC_2,      KC_3,    KC_4,      KC_5,     _______, _______, KC_6,     KC_7,     KC_8,     KC_9,    KC_0,
+//    _______,   _______,   _______, _______,   _______,  _______, _______, KC_BTN1,  KC_BTN2,  _______,  _______, _______ ),
 
   [EXCL] = LAYOUT( /* [> MO_JLEF <] */
     _______,   _______, _______, _______, _______,                    _______,  CM_CHOM,  KC_PGUP,  CM_CEND, _______,
@@ -141,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
 
   [FN] = LAYOUT(
-    _______,   _______, _______, _______, _______,                    _______,  _______,  _______,  _______, QK_BOOT,
+    _______,   _______, _______, _______, _______,                    _______,  _______,  _______,  _______, _______,
     KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,                      KC_BTN1,  CM_SF10,  CM_JHNZ,  _______, _______,
     KC_F6,     KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  _______, _______,  _______,  _______,  _______, KC_LSFT,
     _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______,  _______, _______ ),
@@ -150,8 +164,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,   _______, _______, _______, _______,                    _______,  _______,  _______, _______,  QK_BOOT,
     _______,   _______, _______, _______, _______,                    _______,  _______,  _______, _______,  _______,
     _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______, _______,  _______,
-    _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  DF_JBAS, DF_UBAS,  _______ )
+    _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  DF_JBAS, DF_UBAS,  _______ ),
 
+  [ALTTAB] = LAYOUT( /* [> SWITCH ALTTAB<] */
+    _______,   _______, _______, _______, _______,                    _______,  _______,  _______, _______,  _______,
+    _______,   CM_STAB, KC_LCTL, KC_TAB,  _______,                    _______,  _______,  _______, _______,  _______,
+    _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______, _______,  _______,
+    _______,   _______, _______, _______, _______,  _______, _______, _______,  _______,  _______, _______,  _______ )
 };
 
 void keyboard_post_init_user(void) {
@@ -256,6 +275,8 @@ static uint16_t lise_pressed_time = 0;
 static bool fnsc_pressed = false;
 static uint16_t fnsc_pressed_time = 0;
 
+static uint16_t mod_switch_keycode = false;
+
 //上関数のIMEON/OFF切り替え専用
 //TODO 汎用的な関数を引数に取れるようにすること(関数アドレス)
 //static void user_lt_hnzn(keyrecord_t *record, int layer, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
@@ -279,22 +300,51 @@ static uint16_t fnsc_pressed_time = 0;
 //      }
 //}
 
-static void user_lt(keyrecord_t *record, int layer, uint16_t keycode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
-        if (record->event.pressed) {
+//ホールド中のキーをMODキーに差し替える。
+//layerの指定が0だったらデフォルトレイヤーでMODキーを動作させる
+static void mod_layer_switch (keyrecord_t *record,
+        uint16_t mod_keycode,uint16_t *mod_switch_keycode,int layer){
+    if (record->event.pressed) {
+        *mod_switch_keycode = mod_keycode;
+        if(layer == 0){
+            layer_clear();
+        }else{
+            layer_on(layer);
+        }
+        //set_mods(get_mods() | MOD_BIT(*mod_switch_keycode));
+        register_code(*mod_switch_keycode);
+    }
+}
+
+
+static void user_lt(keyrecord_t *record,
+        int layer,
+        uint16_t keycode,
+        bool *modifier_pressed,
+        uint16_t *modifier_pressed_time,
+        bool tapping_term_disable,
+        uint16_t *mod_switch_keycode){  //mod差し替えフラグ兼KEYCODE
+
+    if (record->event.pressed) {
         *modifier_pressed = true;
         *modifier_pressed_time = record->event.time;
-
         layer_on(layer);
-      } else {
-        layer_off(layer);
-
-        if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
-          register_code(keycode);
-          unregister_code(keycode);
-          unregister_code(keycode);
+    } else {
+        //もしMODキー差替有効中だったらMODキーをクリア（レイヤー移動もクリア）
+        if(*mod_switch_keycode){
+            unregister_code(*mod_switch_keycode);
+            //set_mods(get_mods() & ~MOD_BIT(*mod_switch_keycode));
+            *mod_switch_keycode = 0;
+            layer_clear();
         }
-        *modifier_pressed = false;
-      }
+        layer_off(layer);
+        if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+            register_code(keycode);
+            unregister_code(keycode);
+            unregister_code(keycode);
+        }
+    *modifier_pressed = false;
+    }
 }
 
 // static void user_mt(keyrecord_t *record, uint16_t modcode, uint16_t keycode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
@@ -323,34 +373,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case CM_SPFN:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,SPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false);
+        user_lt(record,SPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,SPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false);
+        user_lt(record,SPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_SPFN2:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,SPFN2,KC_TAB,&spfn2_pressed,&spfn2_pressed_time,false);
+        user_lt(record,SPFN2,KC_F2,&spfn2_pressed,&spfn2_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,SPFN2,KC_TAB,&spfn2_pressed,&spfn2_pressed_time,false);
+        user_lt(record,SPFN2,KC_F2,&spfn2_pressed,&spfn2_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_LISE:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JRISE,KC_TAB,&lise_pressed,&lise_pressed_time,false);
+        user_lt(record,JRISE,KC_TAB,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,URISE,KC_TAB,&lise_pressed,&lise_pressed_time,false);
+        user_lt(record,URISE,KC_TAB,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_FNSC:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,FN,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false);
+        user_lt(record,FN,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,FN,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false);
+        user_lt(record,FN,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
       }
+      return false;
+      break;
+    case SW_LSFT:
+      mod_layer_switch(record,KC_LSFT,&mod_switch_keycode,0);
+      return false;
+      break;
+    case SW_LALT:
+      mod_layer_switch(record,KC_LALT,&mod_switch_keycode,0);
+      return false;
+      break;
+    case SW_LCTL:
+      mod_layer_switch(record,KC_LCTL,&mod_switch_keycode,0);
+      return false;
+      break;
+    case SW_ATAB:
+      mod_layer_switch(record,KC_LALT,&mod_switch_keycode,ALTTAB);
+      return false;
+      break;
+    case SW_LGUI:
+      mod_layer_switch(record,KC_LGUI,&mod_switch_keycode,0);
       return false;
       break;
     case CM_LEFT:
