@@ -39,22 +39,24 @@ static void tap_caps_us(void) {
     SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_CAPS) SS_UP(X_LSFT));
 }
 
-#define JBASE   0
-#define UBASE   1
-#define JLEF    2
-#define ULEF    3
-#define JRISE   4
-#define URISE   5
-#define JFN2    6
-#define UFN2    7
-#define JSPFN   8
-#define USPFN   9
-#define EXCL    10
-#define HYPSPFN 11
-#define JFN     12
-#define UFN     13
-#define SYS     14
-#define ALTTAB  15
+enum layer_names {
+    JBASE,
+    UBASE,
+    JLEF,
+    ULEF,
+    JRISE,
+    URISE,
+    JFN2,
+    UFN2,
+    JSPFN,
+    USPFN,
+    EXCL,
+    HYPSPFN,
+    JFN,
+    UFN,
+    SYS,
+    ALTTAB
+};
 
 #define KC_LANG1 KC_LANGUAGE_1
 #define KC_LANG2 KC_LANGUAGE_2
@@ -279,17 +281,26 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 //ホールド中のキーをMODキーに差し替える。
 //layerの指定が0だったらデフォルトレイヤーでMODキーを動作させる
-static void mod_layer_switch (keyrecord_t *record,
-        uint16_t mod_keycode,uint16_t *mod_switch_keycode,int layer){
+static void mod_layer_switch(keyrecord_t *record, uint16_t mod_keycode,
+                             uint16_t *active_mod, uint8_t layer) {
     if (record->event.pressed) {
-        *mod_switch_keycode = mod_keycode;
-        if(layer == 0){
+        *active_mod = mod_keycode;
+        if (layer == 0) {
             layer_clear();
-        }else{
+        } else {
             layer_on(layer);
         }
-        //set_mods(get_mods() | MOD_BIT(*mod_switch_keycode));
-        register_code(*mod_switch_keycode);
+        register_code(mod_keycode);
+    } else {
+        if (*active_mod) {
+            unregister_code(*active_mod);
+            *active_mod = 0;
+        }
+        if (layer == 0) {
+            layer_clear();
+        } else {
+            layer_off(layer);
+        }
     }
 }
 
@@ -339,52 +350,6 @@ static void user_lt(keyrecord_t *record,
 //    }
 //}
 
-// static void user_mt(keyrecord_t *record, uint16_t modcode, uint16_t keycode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
-//         if (record->event.pressed) {
-//         *modifier_pressed = true;
-//         *modifier_pressed_time = record->event.time;
-//       } else {
-// 	if (!*modifier_pressed) unregister_code(modcode);
-//         if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
-//           register_code(keycode);
-//           unregister_code(keycode);
-//           unregister_code(keycode);
-//         }
-//         *modifier_pressed = false;
-//       }
-// }
-
-//static bool alttab_pressed = false;
-//static void alttab_press(keyrecord_t *record,bool *modifier_pressed){
-//  if (record->event.pressed){
-//    if(!*modifier_pressed){
-//      *modifier_pressed = true;
-//      SEND_STRING(SS_DOWN(X_LALT));
-//      SEND_STRING(SS_TAP(X_TAB));
-//    }else{
-//      *modifier_pressed = false;
-//      SEND_STRING(SS_UP(X_LALT));
-//    }
-//  }
-//}
-//
-//static bool alttab_vm_pressed = false;
-//static void alttab_vm_press(keyrecord_t *record,bool *modifier_pressed){
-//  if (record->event.pressed){
-//    if(!*modifier_pressed){
-//      *modifier_pressed = true;
-//      SEND_STRING(SS_DOWN(X_LCTL));
-//      SEND_STRING(SS_TAP(X_LALT));
-//      SEND_STRING(SS_UP(X_LCTL));
-//      SEND_STRING(SS_DOWN(X_LALT));
-//      SEND_STRING(SS_TAP(X_TAB));
-//    }else{
-//      *modifier_pressed = false;
-//      SEND_STRING(SS_UP(X_LALT));
-//      SEND_STRING(SS_TAP(X_BTN1));
-//    }
-//  }
-//}
 
 
 static tap_state_t shhz_state = {false, 0};
@@ -462,26 +427,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //      if(record->event.pressed){
 //        SEND_STRING(SS_DOWN(X_LCTL));
 //        SEND_STRING(SS_TAP(X_LALT));
-//        SEND_STRING(SS_UP(X_LCTL));
-//      }else{
-//      }
-//      return false;
-//      break;
-//    case CM_ATAB:
-//      alttab_press(record,&alttab_pressed);
-//      return false;
-//      break;
-//    case CM_HZCL:
-//      if (get_highest_layer(default_layer_state)==JBASE){
-//        user_mt_hnzn(record,KC_LCTL,&hzcl_pressed,&hzcl_pressed_time,false);
-//      } else {
-//        user_mt_hnzn(record,KC_LCTL,&hzcl_pressed,&hzcl_pressed_time,false);
-//      }
-//      return false;
-//      break;
-    case CM_LEFT:
-      if(record->event.pressed){
-        //pressed
         tap_code(KC_LEFT);
         tap_code(KC_LEFT);
         tap_code(KC_LEFT);
