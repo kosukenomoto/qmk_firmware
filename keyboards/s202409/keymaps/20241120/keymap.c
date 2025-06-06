@@ -7,18 +7,20 @@
 
 #define JBASE   0
 #define UBASE   1
-#define JRISE   2
-#define URISE   3
-#define JLEF    4
-#define ULEF    5
-#define JSPFN   6
-#define USPFN   7
-#define EXCL    8
-#define HYPSPFN 9
-#define JFN     10
-#define UFN     11
-#define SYS     12
-#define ALTTAB  13
+#define JLEF    2
+#define ULEF    3
+#define JRISE   4
+#define URISE   5
+#define JFN2    6
+#define UFN2    7
+#define JSPFN   8
+#define USPFN   9
+#define EXCL    10
+#define HYPSPFN 11
+#define JFN     12
+#define UFN     13
+#define SYS     14
+#define ALTTAB  15
 
 #define KC_LANG1 KC_LANGUAGE_1
 #define KC_LANG2 KC_LANGUAGE_2
@@ -28,7 +30,7 @@
 #define DF_JBAS DF(JBASE)
 #define DF_UBAS DF(UBASE)
 
-#define CM_SYS LT(SYS,KC_LANG1)
+#define CM_SYS LT(SYS,KC_PSCR)
 //#define CM_JFN LT(JFN,KC_LGUI)
 //#define CM_UFN LT(UFN,KC_LGUI)
 
@@ -49,6 +51,7 @@
 #define Z_ALT   LALT_T(KC_Z)
 #define JSL_ALT LALT_T(JP_SLSH)
 #define USL_ALT LALT_T(KC_SLSH)
+#define SL_ALT LALT_T(KC_SLSH)
 #define ESC_ALT LALT_T(KC_ESC)
 #define ESC_CTL LCTL_T(KC_ESC)
 
@@ -72,8 +75,8 @@
 //#define ENT_SFT SFT_T(KC_ENT)//KC_MHEN
 #define LN1_CTL LCTL_T(KC_TAB)
 
+#define CM_CAPS S(JP_EISU)
 #define CM_STAB S(KC_TAB)
-#define CM_CAPS S(KC_CAPS)
 #define CM_GUIE G(KC_E)
 #define CM_GUIM G(KC_D)
 #define CM_GUUP G(KC_UP)
@@ -82,6 +85,7 @@
 #define CM_ALTE A(KC_ESC)
 #define LT_JLEF LT(JLEF,KC_ESC)
 #define LT_ULEF LT(ULEF,KC_ESC)
+
 #define CM_GUIT G(KC_TAB)
 #define CM_ALTT A(KC_TAB)
 #define CM_WSCS G(S(KC_S))
@@ -107,22 +111,25 @@
 #define WI_APP4 G(KC_4)
 
 enum custom_keycodes {
-  CM_LEFT = SAFE_RANGE,
-  CM_RGHT,
-  CM_UP,
-  CM_DOWN,
-  CM_SPFN,
-  CM_LEFN,
-  CM_LISE,
-  CM_RISE,
-  CM_FNSC,
-  CM_ALCT,
-  SW_ATAB,
-  EX_CDEL,
-  EX_RDEL,
-  EX_CINS,
-  EX_RINS,
-  CM_HZCL,
+    CM_LEFT = SAFE_RANGE,
+    CM_RGHT,
+    CM_UP,
+    CM_DOWN,
+    CM_SPFN,
+    CM_LEFN,
+    CM_LISE,
+    CM_RISE,
+    CM_FNSC,
+    CM_FNSO,
+    CM_ALCT,
+    SW_ATAB,
+    CM_SHHZ,
+    CM_SHCL,
+    CM_K_QY,
+    CM_K_QU,
+    CM_K_QI,
+    CM_K_QO,
+    CM_K_QP,
 };
 
 //const uint16_t PROGMEM esc_combo[] = {KC_W, KC_E, COMBO_END};
@@ -130,7 +137,7 @@ enum custom_keycodes {
 //const uint16_t PROGMEM screenshot_combo[] = {KC_R, KC_T, COMBO_END};
 //const uint16_t PROGMEM gui_combo[] = {KC_C, KC_V, COMBO_END};
 //const uint16_t PROGMEM altf4_combo[] = {KC_X, KC_C, COMBO_END};
-//const uint16_t PROGMEM guie_combo[] = {KC_F, KC_G, COMBO_END};
+//const uintJ16_t PROGMEM guie_combo[] = {KC_F, KC_G, COMBO_END};
 //const uint16_t PROGMEM guim_combo[] = {KC_V, KC_B, COMBO_END};
 //const uint16_t PROGMEM lang1_combo[] = {KC_S, KC_D, COMBO_END};
 //const uint16_t PROGMEM lang2_combo[] = {KC_K, KC_L, COMBO_END};
@@ -152,19 +159,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [JBASE] = LAYOUT_split_3x5_3(  /* Qwerty win jpkey */
     //win jpkey(QMK)  GUI(command)   CTL(control)   ALT(option)
-        KC_Q,    KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
-        A_ALT,   KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
-        Z_SFT,   KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    KC_COMM,  DOT_ALT, SL_SFT,
-                          KC_LGUI,  CM_LEFN, KC_LCTL,       CM_SPFN, CM_LISE, CM_SYS
+        CM_LEFN, KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
+        KC_A,    KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
+        KC_Z,    KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
+                          KC_LGUI,  CM_SHHZ, KC_LCTL,       CM_SPFN, CM_SHCL, CM_SYS
     ),
 
     [UBASE] = LAYOUT_split_3x5_3( /* Qwerty mac uskey */
     //mac uskey(QMK)      ALT(option)       GUI(command)                CTL(control)
     //mac karabiner(win)  option(ALT)->GUI  command(GUI)->control(CTL)  control(CTL)->option(ALT)
-        KC_Q,    KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
-        A_ALT,   KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
-        Z_SFT,   KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    KC_COMM,  DOT_ALT, SL_SFT,
-                          KC_LGUI,  CM_LEFN, KC_LCTL,       CM_SPFN, CM_LISE, CM_SYS
+        CM_LEFN, KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
+        KC_A,    KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
+        KC_Z,    KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
+                          KC_LGUI,  CM_SHHZ, KC_LCTL,       CM_SPFN, CM_SHCL, CM_SYS
+    ),
+
+    [JLEF] = LAYOUT_split_3x5_3(
+        _______,  CM_ALT4,  KC_ESC,   CM_ALCT,  SW_ATAB,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
+        _______,  _______,  _______,  _______,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
+                            _______,  _______,  _______,        _______,  _______,  _______
+    ),
+
+    [ULEF] = LAYOUT_split_3x5_3(
+        _______,  CM_ALT4,  KC_ESC,   CM_ALCT,  SW_ATAB,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
+        _______,  _______,  _______,  _______,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
+                            _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [JRISE] = LAYOUT_split_3x5_3(
@@ -181,58 +202,57 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
-    [JLEF] = LAYOUT_split_3x5_3(
-        _______,  CM_ALT4,  KC_ESC,   _______,  _______,        JP_TILD,  JP_ASTR,  JP_LPRN,  JP_RPRN,  JP_MINS,
-        _______,  _______,  KC_DEL,   SW_ATAB,  _______,        JP_LCBR,  JP_RCBR,  JP_LBRC,  JP_RBRC,  JP_COLN,
-        _______,  _______,  _______,  CM_ALCT,  _______,        JP_QUOT,  JP_DQUO,  JP_LABK,  JP_RABK,  JP_QUES,
+    [JFN2] = LAYOUT_split_3x5_3(
+        _______,  JP_LPRN,  JP_RPRN,  JP_LBRC,  JP_RBRC,        _______,  _______,  _______,  _______,  _______,
+        JP_QUOT,  JP_DQUO,  JP_MINS,  JP_LCBR,  JP_RCBR,        KC_BTN1,  CM_SF10,  JP_ZKHK,  CM_CAPS,  _______,
+        JP_QUES,  JP_COLN,  JP_LABK,  JP_RABK,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
-
-    [ULEF] = LAYOUT_split_3x5_3(
-        _______,  CM_ALT4,  KC_ESC,   _______,  _______,        KC_TILD,  KC_ASTR,  KC_LPRN,  KC_RPRN,  KC_MINS,
-        _______,  _______,  KC_DEL,   SW_ATAB,  _______,        KC_LCBR,  KC_RCBR,  KC_LBRC,  KC_RBRC,  KC_COLN,
-        _______,  _______,  _______,  CM_ALCT,  _______,        KC_QUOT,  KC_DQUO,  KC_LABK,  KC_RABK,  KC_QUES,
+    [UFN2] = LAYOUT_split_3x5_3(
+        _______,  KC_LPRN,  KC_RPRN,  KC_LBRC,  KC_RBRC,        _______,  _______,  _______,  _______,  _______,
+        KC_QUOT,  KC_DQUO,  KC_MINS,  KC_LCBR,  KC_RCBR,        KC_BTN1,  CM_SF10,  CM_UHNZ,  CM_CAPS,  _______,
+        KC_QUES,  KC_COLN,  KC_LABK,  KC_RABK,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [JSPFN] = LAYOUT_split_3x5_3( /* [> SPFN <] */
         CM_GUIE,  CM_ALT4,  LT_EXCL,  CM_GUIT,  CM_WSCS,        CM_STAB,  KC_HOME,  KC_UP,    KC_END,   KC_TAB,
-        KC_LALT,  KC_LSFT,  KC_DEL,   MO_HYPS,  KC_TAB,         KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_ENT,
+        KC_LALT,  KC_LSFT,  KC_DEL,   MO_HYPS,  KC_LGUI,        KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_ENT,
         KC_1,     KC_2,     KC_3,     KC_4,     KC_5,           KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [USPFN] = LAYOUT_split_3x5_3( /* [> SPFN <] */
         CM_GUIE,  CM_ALT4,  LT_EXCL,  CM_GUIT,  CM_WSCS,        CM_STAB,  KC_HOME,  KC_UP,    KC_END,   KC_TAB,
-        KC_LALT,  KC_LSFT,  KC_DEL,   MO_HYPS,  KC_TAB,         KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_ENT,
+        KC_LALT,  KC_LSFT,  KC_DEL,   MO_HYPS,  KC_LGUI,        KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_ENT,
         KC_1,     KC_2,     KC_3,     KC_4,     KC_5,           KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [EXCL] = LAYOUT_split_3x5_3(
-        _______,  _______,  _______,  _______,  _______,        EX_CDEL,  CM_CHOM,  KC_PGUP,  CM_CEND,  EX_CINS,
-        _______,  _______,  _______,  _______,  _______,        EX_RDEL,  CM_CPGU,  KC_PGDN,  CM_CPGD,  EX_RINS,
+        _______,  _______,  _______,  _______,  _______,        _______,  CM_CHOM,  KC_PGUP,  CM_CEND,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  CM_CPGU,  KC_PGDN,  CM_CPGD,  _______,
         _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [HYPSPFN] = LAYOUT_split_3x5_3(
-        _______,  _______,  _______,  _______,  _______,        CM_CPGU,  CM_CHOM,  CM_UP,    CM_CEND,  CM_CPGD,
-        CM_GUIM,  WI_DOWN,   WI_SUP,  _______,  _______,        CM_CBSP,  CM_LEFT,  CM_DOWN,  CM_RGHT,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  CM_CHOM,  CM_UP,    CM_CEND,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  CM_LEFT,  CM_DOWN,  CM_RGHT,  _______,
         _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [JFN] = LAYOUT_split_3x5_3(
         _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
-        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          KC_BTN1,  CM_SF10,  CM_JHNZ,  S(JP_EISU), _______,
-        KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,         KC_F11,   KC_F12,   _______,  _______,  _______,
-                            _______,  _______,  _______,        _______,  KC_LSFT,  _______
+        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          KC_BTN1,  CM_SF10,  JP_ZKHK,  CM_CAPS,  _______,
+        KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,         KC_F11,   KC_F12,   _______,  _______,  KC_LSFT,
+                            _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [UFN] = LAYOUT_split_3x5_3(
         _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
-        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          KC_BTN1,  CM_SF10,  CM_UHNZ,  S(JP_EISU), _______,
+        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          KC_BTN1,  CM_SF10,  CM_UHNZ,  CM_CAPS,  _______,
         KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,         KC_F11,   KC_F12,   _______,  _______,  KC_LSFT,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
@@ -245,9 +265,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [ALTTAB] = LAYOUT_split_3x5_3(
-        _______,  _______,  _______,  _______,  _______,        _______,  _______,  KC_UP,    _______,  _______,
-        _______,  _______,  _______,  KC_TAB,   _______,        _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,
-        _______,  _______,  _______,  CM_STAB,  _______,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  CM_STAB,  KC_TAB,         _______,  _______,  KC_UP,    _______,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     )
 };
@@ -354,18 +374,45 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record){
 //    }
 //}
 
-//static void user_mt_hnzn(keyrecord_t *record, uint16_t modcode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
-//         if (record->event.pressed) {
-//         *modifier_pressed = true;
-//         *modifier_pressed_time = record->event.time;
-//       } else {
-//       	  if (!*modifier_pressed) unregister_code(modcode);
-//          if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
-//              SEND_STRING(SS_LALT("`"));
-//          }
-//          *modifier_pressed = false;
-//       }
-// }
+static void user_mt_hnzn(keyrecord_t *record, uint16_t modcode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
+         if (record->event.pressed) {
+         *modifier_pressed = true;
+         *modifier_pressed_time = record->event.time;
+       } else {
+       	  if (!*modifier_pressed) unregister_code(modcode);
+          if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+            if (get_highest_layer(default_layer_state)==JBASE){
+              SEND_STRING("`");
+            }else{
+              SEND_STRING(SS_DOWN(X_LSFT));
+              SEND_STRING(SS_TAP(X_SPC));
+              SEND_STRING(SS_UP(X_LSFT));
+            }
+          *modifier_pressed = false;
+          }
+        }
+}
+
+static void user_mt_cpslck(keyrecord_t *record, uint16_t modcode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
+         if (record->event.pressed) {
+         *modifier_pressed = true;
+         *modifier_pressed_time = record->event.time;
+       } else {
+       	  if (!*modifier_pressed) unregister_code(modcode);
+          if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+            if (get_highest_layer(default_layer_state)==JBASE){
+              SEND_STRING(SS_TAP(X_CAPS));
+            }else{
+              SEND_STRING(SS_DOWN(X_LSFT));
+              SEND_STRING(SS_TAP(X_CAPS));
+              SEND_STRING(SS_UP(X_LSFT));
+            }
+          *modifier_pressed = false;
+          }
+        }
+}
+
+
 //ホールド中のキーをMODキーに差し替える。
 //layerの指定が0だったらデフォルトレイヤーでMODキーを動作させる
 static void mod_layer_switch (keyrecord_t *record,
@@ -476,6 +523,15 @@ static void user_lt(keyrecord_t *record,
 //  }
 //}
 
+
+static bool shhz_pressed = false;
+static uint16_t shhz_pressed_time = 0;
+static bool is_shhz_active = false;
+
+static bool shcl_pressed = false;
+static uint16_t shcl_pressed_time = 0;
+static bool is_shcl_active = false;
+
 static bool spfn_pressed = false;
 static uint16_t spfn_pressed_time = 0;
 
@@ -484,6 +540,9 @@ static uint16_t lise_pressed_time = 0;
 
 static bool fnsc_pressed = false;
 static uint16_t fnsc_pressed_time = 0;
+
+static bool fnso_pressed = false;
+static uint16_t fnso_pressed_time = 0;
 
 static bool lefn_pressed = false;
 static uint16_t lefn_pressed_time = 0;
@@ -497,13 +556,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (keycode != CM_SPFN) {spfn_pressed = false;}
     if (keycode != CM_LISE) {lise_pressed = false;}
     if (keycode != CM_FNSC) {fnsc_pressed = false;}
-//    if (keycode != CM_RISE) {lise_pressed = false;}
-//    if (keycode != CM_HZCL){
-//       if (hzcl_pressed) {register_code(KC_LCTL); is_hzcl_active = true;}
-//       hzcl_pressed  = false;
-//    }
+    if (keycode != CM_FNSO) {fnso_pressed = false;}
+    if (keycode != CM_SHHZ){
+       if (shhz_pressed) {register_code(KC_LSFT); is_shhz_active = true;}
+       shhz_pressed  = false;
+    }
+    if (keycode != CM_SHCL){
+       if (shcl_pressed) {register_code(KC_LSFT); is_shcl_active = true;}
+       shcl_pressed  = false;
+    }
+
   }
   switch (keycode) {
+    case CM_SHHZ:
+      if (get_highest_layer(default_layer_state)==JBASE){
+        user_mt_hnzn(record,KC_LSFT,&shhz_pressed,&shhz_pressed_time,false);
+      } else {
+        user_mt_hnzn(record,KC_LSFT,&shhz_pressed,&shhz_pressed_time,false);
+      }
+      return false;
+      break;
+    case CM_SHCL:
+      if (get_highest_layer(default_layer_state)==JBASE){
+        user_mt_cpslck(record,KC_LSFT,&shcl_pressed,&shcl_pressed_time,false);
+      } else {
+        user_mt_cpslck(record,KC_LSFT,&shcl_pressed,&shcl_pressed_time,false);
+      }
+      return false;
+      break;
+
     case CM_SPFN:
       if (get_highest_layer(default_layer_state)==JBASE){
         user_lt(record,JSPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
@@ -514,25 +595,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case CM_FNSC:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JFN,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JFN2,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,UFN,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,UFN2,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+      }
+      return false;
+      break;
+    case CM_FNSO:
+      if (get_highest_layer(default_layer_state)==JBASE){
+        user_lt(record,JFN,KC_DOT,&fnso_pressed,&fnso_pressed_time,false,&mod_switch_keycode);
+      } else {
+        user_lt(record,UFN,KC_DOT,&fnso_pressed,&fnso_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_LISE:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JRISE,KC_LANG2,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JRISE,KC_COMM,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,URISE,KC_LANG2,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,URISE,KC_COMM,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_LEFN:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JLEF,KC_ESC,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JLEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,ULEF,KC_ESC,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,ULEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
@@ -558,56 +647,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //      }
 //      return false;
 //      break;
-    case EX_CDEL:
-      if(record->event.pressed){
-        //pressed
-        SEND_STRING(SS_DOWN(X_LALT));
-        SEND_STRING(SS_TAP(X_H));
-        SEND_STRING(SS_TAP(X_D));
-        SEND_STRING(SS_TAP(X_C));
-        SEND_STRING(SS_UP(X_LALT));
-      } else {
-        //released
-      }
-      return false;
-      break;
-    case EX_RDEL:
-      if(record->event.pressed){
-        //pressed
-        SEND_STRING(SS_DOWN(X_LALT));
-        SEND_STRING(SS_TAP(X_H));
-        SEND_STRING(SS_TAP(X_D));
-        SEND_STRING(SS_TAP(X_R));
-        SEND_STRING(SS_UP(X_LALT));
-      } else {
-        //released
-      }
-      return false;
-      break;
-    case EX_CINS:
-      if(record->event.pressed){
-        //pressed
-        SEND_STRING(SS_DOWN(X_LALT));
-        SEND_STRING(SS_TAP(X_I));
-        SEND_STRING(SS_TAP(X_C));
-        SEND_STRING(SS_UP(X_LALT));
-      } else {
-        //released
-      }
-      return false;
-      break;
-    case EX_RINS:
-      if(record->event.pressed){
-        //pressed
-        SEND_STRING(SS_DOWN(X_LALT));
-        SEND_STRING(SS_TAP(X_I));
-        SEND_STRING(SS_TAP(X_R));
-        SEND_STRING(SS_UP(X_LALT));
-      } else {
-        //released
-      }
-      return false;
-      break;
     case CM_LEFT:
       if(record->event.pressed){
         //pressed
@@ -685,15 +724,70 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    default:
+    case CM_K_QY:
+      if(record->event.pressed){
+        //pressed
+        tap_code(KC_Q);
+        tap_code(KC_Y);
+      }else{
+        //released
+      }
+      return false;
+      break;
+    case CM_K_QU:
+      if(record->event.pressed){
+        //pressed
+        tap_code(KC_Q);
+        tap_code(KC_U);
+      }else{
+        //released
+      }
+      return false;
+      break;
+    case CM_K_QI:
+      if(record->event.pressed){
+        //pressed
+        tap_code(KC_Q);
+        tap_code(KC_I);
+      }else{
+        //released
+      }
+      return false;
+      break;
+    case CM_K_QO:
+      if(record->event.pressed){
+        //pressed
+        tap_code(KC_Q);
+        tap_code(KC_O);
+      }else{
+        //released
+      }
+      return false;
+      break;
+    case CM_K_QP:
+      if(record->event.pressed){
+        //pressed
+        tap_code(KC_Q);
+        tap_code(KC_P);
+      }else{
+        //released
+      }
+      return false;
+      break;
+
+      default:
       if (record->event.pressed) {
         // reset the flag
         spfn_pressed = false;
         lise_pressed = false;
         fnsc_pressed = false;
+        fnso_pressed = false;
         lefn_pressed = false;
-//        if (hzcl_pressed) {register_code(KC_LCTL); is_hzcl_active = true;}
-//       hzcl_pressed  = false;
+        if (shhz_pressed) {register_code(KC_LSFT); is_shhz_active = true;}
+        shhz_pressed  = false;
+        if (shcl_pressed) {register_code(KC_LSFT); is_shcl_active = true;}
+        shcl_pressed  = false;
+
       }
       break;
     }
@@ -710,4 +804,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
-
