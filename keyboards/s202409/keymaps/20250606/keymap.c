@@ -5,6 +5,40 @@
 
 #include "keymap_jp.h"
 
+typedef struct {
+    bool pressed;
+    uint16_t timer;
+} tap_state_t;
+
+typedef void (*tap_action_fn)(void);
+
+static void modtap_action(keyrecord_t *record, tap_state_t *state, uint16_t modcode,
+                          tap_action_fn tap_jp, tap_action_fn tap_us) {
+    if (record->event.pressed) {
+        state->pressed = true;
+        state->timer = timer_read();
+        register_code(modcode);
+    } else {
+        unregister_code(modcode);
+        if (state->pressed && timer_elapsed(state->timer) < TAPPING_TERM) {
+            if (get_highest_layer(default_layer_state) == JBASE) {
+                if (tap_jp) tap_jp();
+            } else {
+                if (tap_us) tap_us();
+            }
+        }
+        state->pressed = false;
+    }
+}
+
+static void tap_hnzn_jp(void) { SEND_STRING("`"); }
+static void tap_hnzn_us(void) { SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_SPC) SS_UP(X_LSFT)); }
+
+static void tap_caps_jp(void) { SEND_STRING(SS_TAP(X_CAPS)); }
+static void tap_caps_us(void) {
+    SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_CAPS) SS_UP(X_LSFT));
+}
+
 #define JBASE   0
 #define UBASE   1
 #define JLEF    2
@@ -43,56 +77,23 @@
 #define HZ_CTL  LCTL_T(CM_JHNZ)
 #define SC_ALT  LALT_T(KC_SCLN)
 
-#define K1_ALT  LALT_T(KC_1)
-#define X_ALT   LALT_T(KC_X)
-#define DOT_ALT LALT_T(KC_DOT)
-
 #define A_ALT   LALT_T(KC_A)
-#define Z_ALT   LALT_T(KC_Z)
-#define JSL_ALT LALT_T(JP_SLSH)
-#define USL_ALT LALT_T(KC_SLSH)
-#define SL_ALT LALT_T(KC_SLSH)
-#define ESC_ALT LALT_T(KC_ESC)
-#define ESC_CTL LCTL_T(KC_ESC)
+#define SL_ALT  LALT_T(KC_SLSH)
 
-#define SL_SFT SFT_T(KC_SLSH)
-#define A_SFT   SFT_T(KC_A)
+#define SL_SFT  SFT_T(KC_SLSH)
 #define Z_SFT   SFT_T(KC_Z)
-#define ESC_SFT SFT_T(KC_ESC)
-#define SC_SFT  SFT_T(KC_SCLN)
-
-#define TAB_CTL LCTL_T(KC_TAB)
-#define F_CTL   LCTL_T(KC_F)
-#define J_CTL   LCTL_T(KC_J)
-#define X_CTL   LCTL_T(KC_X)
-#define DT_CTL  LCTL_T(KC_DOT)
-#define G_GUI   LGUI_T(KC_G)
-#define H_GUI   LGUI_T(KC_H)
-#define CM_SJSS SFT_T(JP_SLSH)
-#define CM_SUSS SFT_T(KC_SLSH)
-#define CM_SHTZ SFT_T(KC_Z)
-#define LN2_SFT SFT_T(KC_LANG1)//KC_MHEN
-//#define ENT_SFT SFT_T(KC_ENT)//KC_MHEN
-#define LN1_CTL LCTL_T(KC_TAB)
 
 #define CM_CAPS S(JP_EISU)
 #define CM_STAB S(KC_TAB)
 #define CM_GUIE G(KC_E)
-#define CM_GUIM G(KC_D)
-#define CM_GUUP G(KC_UP)
-#define CM_GUDN G(KC_DOWN)
 #define CM_ALT4 A(KC_F4)
-#define CM_ALTE A(KC_ESC)
 #define LT_JLEF LT(JLEF,KC_ESC)
 #define LT_ULEF LT(ULEF,KC_ESC)
 
 #define CM_GUIT G(KC_TAB)
-#define CM_ALTT A(KC_TAB)
 #define CM_WSCS G(S(KC_S))
 #define MO_HYPS MO(HYPSPFN)
 #define LT_EXCL LT(EXCL,KC_ESC)
-#define MO_EXCL MO(EXCL)
-#define LT_HYPS LT(HYPSPFN,KC_TAB)
 #define CM_CPGU C(KC_PGUP)
 #define CM_CPGD C(KC_PGDN)
 #define CM_CHOM C(KC_HOME)
@@ -100,15 +101,6 @@
 #define CM_CBSP C(KC_BSPC)
 #define CM_SF10 S(KC_F10)
 
-#define WI_UP   G(KC_UP)
-#define WI_SUP  G(S(KC_UP))
-#define WI_DOWN G(KC_DOWN)
-#define WI_LEFT G(KC_LEFT)
-#define WI_RGHT G(KC_RGHT)
-#define WI_APP1 G(KC_1)
-#define WI_APP2 G(KC_2)
-#define WI_APP3 G(KC_3)
-#define WI_APP4 G(KC_4)
 
 enum custom_keycodes {
     CM_LEFT = SAFE_RANGE,
@@ -118,7 +110,6 @@ enum custom_keycodes {
     CM_SPFN,
     CM_LEFN,
     CM_LISE,
-    CM_RISE,
     CM_FNSC,
     CM_FNSO,
     CM_ALCT,
@@ -272,13 +263,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record){
-    switch (keycode) {
-        default:
-            return QUICK_TAP_TERM;
-    }
-}
-
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case A_ALT:
@@ -290,127 +274,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         default:
             return TAPPING_TERM;
     }
-}
 
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        default:
-            return false;
-    }
-}
-
-bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record){
-    switch (keycode) {
-        default:
-            return true;
-    }
-}
-
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record){
-    switch (keycode) {
-        default:
-            return false;
-    }
-}
-
-// シフト数字でJIS配列に沿った記号を出力するための処理
-//(シフト数字を使わないのでコメントアウト)
-//static bool process_jp_symbols_impl(uint16_t keycode, bool pressed) {
-//    if (!pressed) {
-//        return true;
-//    }
-//    uint8_t shift = keyboard_report->mods & (MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT));
-//    if (!shift) {
-//        return true;
-//    }
-//    uint16_t s;
-//    switch (keycode) {
-//        // Replace Shift-Symbols like ANSI for JIS.
-//        case JP_2:    s = JP_AT; break;
-//        case JP_6:    s = JP_CIRC; break;
-//        case JP_7:    s = JP_AMPR; break;
-//        case JP_8:    s = JP_ASTR; break;
-//        case JP_9:    s = JP_LPRN; break;
-//        case JP_0:    s = JP_RPRN; break;
-//        case JP_GRV:  s = JP_TILD; break;
-//        case JP_EQL:  s = JP_PLUS; break;
-//        case JP_MINS: s = JP_UNDS; break;
-//        case JP_QUOT: s = JP_DQUO; break;
-//        case JP_SCLN: s = JP_COLN; break;
-//        case JP_BSLS: s = JP_PIPE; break;
-//        default: return true;
-//    }
-//    unregister_mods(shift);
-//    tap_code16(s);
-//    register_mods(shift);
-//    return false;
-//}
-//
-//bool process_jp_symbols(uint16_t keycode, keyrecord_t *record) {
-//    return process_jp_symbols_impl(keycode, record->event.pressed);
-//}
-//void tap_code16jp(uint16_t keycode) {
-//    if (process_jp_symbols_impl(keycode, true)) {
-//        tap_code16(keycode);
-//    }
-//}
-
-//上関数のIMEON/OFF切り替え専用
-//TODO 汎用的な関数を引数に取れるようにすること(関数アドレス)
-//static void user_lt_hnzn(keyrecord_t *record, int layer, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
-//    if (record->event.pressed) {
-//      *modifier_pressed_time = record->event.time;
-//      *modifier_pressed = true;
-//      layer_on(layer);
-//    } else {
-//      layer_off(layer);
-//      if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
-//        if (get_highest_layer(default_layer_state)==JBASE){
-//          SEND_STRING(SS_LALT("`"));
-//        }else{
-//          SEND_STRING(SS_LALT("`"));
-//        }
-//      }
-//    }
-//}
-
-static void user_mt_hnzn(keyrecord_t *record, uint16_t modcode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
-         if (record->event.pressed) {
-         *modifier_pressed = true;
-         *modifier_pressed_time = record->event.time;
-       } else {
-       	  if (!*modifier_pressed) unregister_code(modcode);
-          if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
-            if (get_highest_layer(default_layer_state)==JBASE){
-              SEND_STRING("`");
-            }else{
-              SEND_STRING(SS_DOWN(X_LSFT));
-              SEND_STRING(SS_TAP(X_SPC));
-              SEND_STRING(SS_UP(X_LSFT));
-            }
-          *modifier_pressed = false;
-          }
-        }
-}
-
-static void user_mt_cpslck(keyrecord_t *record, uint16_t modcode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
-         if (record->event.pressed) {
-         *modifier_pressed = true;
-         *modifier_pressed_time = record->event.time;
-       } else {
-       	  if (!*modifier_pressed) unregister_code(modcode);
-          if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
-            if (get_highest_layer(default_layer_state)==JBASE){
-              SEND_STRING(SS_TAP(X_CAPS));
-            }else{
-              SEND_STRING(SS_DOWN(X_LSFT));
-              SEND_STRING(SS_TAP(X_CAPS));
-              SEND_STRING(SS_UP(X_LSFT));
-            }
-          *modifier_pressed = false;
-          }
-        }
-}
 
 
 //ホールド中のキーをMODキーに差し替える。
@@ -433,14 +297,13 @@ static void mod_layer_switch (keyrecord_t *record,
 static void user_lt(keyrecord_t *record,
         int layer,
         uint16_t keycode,
-        bool *modifier_pressed,
-        uint16_t *modifier_pressed_time,
+        tap_state_t *state,
         bool tapping_term_disable,
         uint16_t *mod_switch_keycode){  //mod差し替えフラグ兼KEYCODE
 
     if (record->event.pressed) {
-        *modifier_pressed = true;
-        *modifier_pressed_time = record->event.time;
+        state->pressed = true;
+        state->timer = record->event.time;
         layer_on(layer);
     } else {
         //もしMODキー差替有効中だったらMODキーをクリア（レイヤー移動もクリア）
@@ -451,12 +314,12 @@ static void user_lt(keyrecord_t *record,
             layer_clear();
         }
         layer_off(layer);
-        if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+        if (state->pressed && (tapping_term_disable || (timer_elapsed(state->timer) < TAPPING_TERM))) {
             register_code(keycode);
             unregister_code(keycode);
             unregister_code(keycode);
         }
-    *modifier_pressed = false;
+    state->pressed = false;
     }
 }
 
@@ -524,104 +387,73 @@ static void user_lt(keyrecord_t *record,
 //}
 
 
-static bool shhz_pressed = false;
-static uint16_t shhz_pressed_time = 0;
-static bool is_shhz_active = false;
-
-static bool shcl_pressed = false;
-static uint16_t shcl_pressed_time = 0;
-static bool is_shcl_active = false;
-
-static bool spfn_pressed = false;
-static uint16_t spfn_pressed_time = 0;
-
-static bool lise_pressed = false;
-static uint16_t lise_pressed_time = 0;
-
-static bool fnsc_pressed = false;
-static uint16_t fnsc_pressed_time = 0;
-
-static bool fnso_pressed = false;
-static uint16_t fnso_pressed_time = 0;
-
-static bool lefn_pressed = false;
-static uint16_t lefn_pressed_time = 0;
+static tap_state_t shhz_state = {false, 0};
+static tap_state_t shcl_state = {false, 0};
+static tap_state_t spfn_state = {false, 0};
+static tap_state_t lise_state = {false, 0};
+static tap_state_t fnsc_state = {false, 0};
+static tap_state_t fnso_state = {false, 0};
+static tap_state_t lefn_state = {false, 0};
 
 static uint16_t mod_switch_keycode = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     // reset the user_lt & user_tt flags
-    if (keycode != CM_LEFN) {lefn_pressed = false;}
-    if (keycode != CM_SPFN) {spfn_pressed = false;}
-    if (keycode != CM_LISE) {lise_pressed = false;}
-    if (keycode != CM_FNSC) {fnsc_pressed = false;}
-    if (keycode != CM_FNSO) {fnso_pressed = false;}
-    if (keycode != CM_SHHZ){
-       if (shhz_pressed) {register_code(KC_LSFT); is_shhz_active = true;}
-       shhz_pressed  = false;
-    }
-    if (keycode != CM_SHCL){
-       if (shcl_pressed) {register_code(KC_LSFT); is_shcl_active = true;}
-       shcl_pressed  = false;
-    }
+    if (keycode != CM_LEFN) {lefn_state.pressed = false;}
+    if (keycode != CM_SPFN) {spfn_state.pressed = false;}
+    if (keycode != CM_LISE) {lise_state.pressed = false;}
+    if (keycode != CM_FNSC) {fnsc_state.pressed = false;}
+    if (keycode != CM_FNSO) {fnso_state.pressed = false;}
 
   }
   switch (keycode) {
     case CM_SHHZ:
-      if (get_highest_layer(default_layer_state)==JBASE){
-        user_mt_hnzn(record,KC_LSFT,&shhz_pressed,&shhz_pressed_time,false);
-      } else {
-        user_mt_hnzn(record,KC_LSFT,&shhz_pressed,&shhz_pressed_time,false);
-      }
+      modtap_action(record, &shhz_state, KC_LSFT, tap_hnzn_jp, tap_hnzn_us);
       return false;
       break;
     case CM_SHCL:
-      if (get_highest_layer(default_layer_state)==JBASE){
-        user_mt_cpslck(record,KC_LSFT,&shcl_pressed,&shcl_pressed_time,false);
-      } else {
-        user_mt_cpslck(record,KC_LSFT,&shcl_pressed,&shcl_pressed_time,false);
-      }
+      modtap_action(record, &shcl_state, KC_LSFT, tap_caps_jp, tap_caps_us);
       return false;
       break;
 
     case CM_SPFN:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JSPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JSPFN,KC_SPC,&spfn_state,false,&mod_switch_keycode);
       } else {
-        user_lt(record,USPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,USPFN,KC_SPC,&spfn_state,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_FNSC:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JFN2,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JFN2,KC_SCLN,&fnsc_state,false,&mod_switch_keycode);
       } else {
-        user_lt(record,UFN2,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,UFN2,KC_SCLN,&fnsc_state,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_FNSO:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JFN,KC_DOT,&fnso_pressed,&fnso_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JFN,KC_DOT,&fnso_state,false,&mod_switch_keycode);
       } else {
-        user_lt(record,UFN,KC_DOT,&fnso_pressed,&fnso_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,UFN,KC_DOT,&fnso_state,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_LISE:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JRISE,KC_COMM,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JRISE,KC_COMM,&lise_state,false,&mod_switch_keycode);
       } else {
-        user_lt(record,URISE,KC_COMM,&lise_pressed,&lise_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,URISE,KC_COMM,&lise_state,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_LEFN:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JLEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JLEF,KC_Q,&lefn_state,false,&mod_switch_keycode);
       } else {
-        user_lt(record,ULEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,ULEF,KC_Q,&lefn_state,false,&mod_switch_keycode);
       }
       return false;
       break;
@@ -777,17 +609,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
       default:
       if (record->event.pressed) {
-        // reset the flag
-        spfn_pressed = false;
-        lise_pressed = false;
-        fnsc_pressed = false;
-        fnso_pressed = false;
-        lefn_pressed = false;
-        if (shhz_pressed) {register_code(KC_LSFT); is_shhz_active = true;}
-        shhz_pressed  = false;
-        if (shcl_pressed) {register_code(KC_LSFT); is_shcl_active = true;}
-        shcl_pressed  = false;
-
+        spfn_state.pressed = false;
+        lise_state.pressed = false;
+        fnsc_state.pressed = false;
+        fnso_state.pressed = false;
+        lefn_state.pressed = false;
       }
       break;
     }
