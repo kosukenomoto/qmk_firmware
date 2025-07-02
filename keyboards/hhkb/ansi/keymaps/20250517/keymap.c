@@ -9,12 +9,15 @@
 #define UBASE   1
 #define JSYM    2
 #define USYM    3
-#define SPFN    4
-#define EXCL    5
-#define HYPE    6
-#define FN      7
-#define SYS     8
-#define ALTTAB  9
+#define JSYM2   4
+#define USYM2   5
+#define JSPFN   6
+#define USPFN   7
+#define EXCL    8
+#define HYPE    9
+#define FN      10
+#define SYS     11
+#define ALTTAB  12
 
 #define KC_MSDN    KC_MS_DOWN
 #define KC_MSUP    KC_MS_UP
@@ -27,8 +30,11 @@
 #define DF_JBAS DF(JBASE)
 #define DF_UBAS DF(UBASE)
 
+#define CM_CAPS S(JP_EISU)
+
 #define BK_SFT SFT_T(KC_BSPC)
 #define SL_SFT SFT_T(KC_SLSH)
+#define SL_ALT LALT_T(KC_SLSH)
 #define Z_SFT SFT_T(KC_Z)
 #define A_ALT LALT_T(KC_A)
 
@@ -68,6 +74,7 @@ enum custom_keycodes {
   CM_SPFN,
   CM_FNSC,
   CM_FNQU,
+  CM_FNCM,
   CM_ALCT,
   SW_LSFT,
   SW_LALT,
@@ -90,38 +97,60 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [JBASE] = LAYOUT( /* Qwerty 106 jpkey */
     KC_ESC, KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   JP_MINS,JP_EQL, JP_BSLS,JP_GRV,
-    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   JP_LBRC,JP_RBRC,KC_BSPC,
-    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,CM_FNQU,KC_ENT,
-    KC_LSFT,KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   JP_COMM,JP_DOT, JP_SLSH,KC_RSFT,LT_SYS,
+    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   CM_CAPS,JP_RBRC,KC_BSPC,
+    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,JP_ZKHK,KC_ENT,
+    KC_LSFT,KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   CM_FNCM,CM_FNQU,SL_ALT, KC_RSFT,LT_SYS,
     KC_LGUI,KC_LALT,CM_SPFN,KC_RALT,KC_RGUI),
 
   [UBASE] = LAYOUT( /* Qwerty 101 uskey */
     KC_ESC, KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINS,KC_EQL, KC_BSLS,KC_GRV,
-    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   KC_LBRC,KC_RBRC,KC_BSPC,
-    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,CM_FNQU,KC_ENT,
-    KC_LSFT,KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,KC_RSFT,LT_SYS,
+    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   CM_CAPS,KC_RBRC,KC_BSPC,
+    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,CM_UHNZ,KC_ENT,
+    KC_LSFT,KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   CM_FNCM,CM_FNQU,SL_ALT, KC_RSFT,LT_SYS,
     KC_LGUI,KC_LALT,CM_SPFN,KC_RALT,KC_RGUI),
 
   [JSYM] = LAYOUT(
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,JP_EXLM,JP_AT,  JP_HASH,JP_DLR, JP_PERC,_______,_______,_______,_______,_______,_______,_______,_______,
-    _______,JP_UNDS,JP_PLUS,JP_EQL, JP_ASTR,JP_CIRC,KC_BTN1,CM_SF10,JP_ZKHK,_______,_______,_______,_______,
+    _______,JP_UNDS,JP_PLUS,JP_EQL, JP_ASTR,JP_CIRC,_______,_______,_______,_______,_______,_______,_______,
     _______,JP_BSLS,JP_AMPR,JP_PIPE,JP_TILD,JP_GRV, _______,_______,_______,_______,_______,_______,_______,
     _______,_______,_______,_______,_______),
 
   [USYM] = LAYOUT( /* Qwerty 101 uskey */
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,KC_EXLM,KC_AT,  KC_HASH,KC_DLR, KC_PERC,_______,_______,_______,_______,_______,_______,_______,_______,
-    _______,KC_UNDS,KC_PLUS,KC_EQL, KC_ASTR,KC_CIRC,KC_BTN1,CM_SF10,CM_UHNZ,_______,_______,_______,_______,
+    _______,KC_UNDS,KC_PLUS,KC_EQL, KC_ASTR,KC_CIRC,_______,_______,_______,_______,_______,_______,_______,
     _______,KC_BSLS,KC_AMPR,KC_PIPE,KC_TILD,KC_GRV, _______,_______,_______,_______,_______,_______,_______,
     _______,_______,_______,_______,_______),
 
-  [SPFN] = LAYOUT( /* Qwerty 101 uskey */
+  [JSYM2] = LAYOUT(
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
-    _______,_______,_______,LT_EXCL,_______,_______,CM_STAB,KC_HOME,KC_UP,  KC_END, KC_TAB, _______,_______,_______,
+    _______,_______,JP_LPRN,JP_RPRN,JP_LBRC,JP_RBRC,_______,_______,_______,_______,_______,_______,_______,_______,
+    _______,JP_QUOT,JP_DQUO,JP_MINS,JP_LCBR,JP_RCBR,_______,_______,_______,_______,_______,_______,_______,
+    _______,JP_QUES,JP_COLN,JP_LABK,JP_RABK,_______,_______,_______,_______,_______,_______,_______,_______,
+    _______,_______,_______,_______,_______),
+
+  [USYM2] = LAYOUT( /* Qwerty 101 uskey */
+    _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
+    _______,_______,KC_LPRN,KC_RPRN,KC_LBRC,KC_RBRC,_______,_______,_______,_______,_______,_______,_______,_______,
+    _______,KC_QUOT,KC_DQUO,KC_MINS,KC_LCBR,KC_RCBR,_______,_______,_______,_______,_______,_______,_______,
+    _______,KC_QUES,KC_COLN,KC_LABK,KC_RABK,_______,_______,_______,_______,_______,_______,_______,_______,
+    _______,_______,_______,_______,_______),
+
+  [JSPFN] = LAYOUT( /* Qwerty 101 uskey */
+    _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
+    CM_WSCS,_______,CM_ALT4,LT_EXCL,_______,_______,CM_STAB,KC_HOME,KC_UP,  KC_END, KC_TAB, _______,_______,_______,
     _______,KC_LALT,KC_LSFT,KC_DEL, MO_HYPS,KC_LGUI,KC_BSPC,KC_LEFT,KC_DOWN,KC_RGHT,KC_ENT, _______,_______,
     _______,KC_1   ,KC_2   ,KC_3   ,KC_4   ,KC_5   ,KC_6   ,KC_7   ,KC_8   ,KC_9   ,KC_0   ,_______,_______,
     _______,_______,_______,_______,_______),
+
+  [USPFN] = LAYOUT( /* Qwerty 101 uskey */
+    _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
+    KC_PSCR,_______,CM_ALT4,LT_EXCL,_______,_______,CM_STAB,KC_HOME,KC_UP,  KC_END, KC_TAB, _______,_______,_______,
+    _______,KC_LALT,KC_LSFT,KC_DEL, MO_HYPS,KC_LGUI,KC_BSPC,KC_LEFT,KC_DOWN,KC_RGHT,KC_ENT, _______,_______,
+    _______,KC_1   ,KC_2   ,KC_3   ,KC_4   ,KC_5   ,KC_6   ,KC_7   ,KC_8   ,KC_9   ,KC_0   ,_______,_______,
+    _______,_______,_______,_______,_______),
+
 
 
   [EXCL] = LAYOUT( /* Qwerty 101 uskey */
@@ -142,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  _______,_______,_______,_______,_______,_______,_______,
-    _______,KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10, KC_F11, KC_F12, _______,_______,_______,_______,_______,
+    _______,KC_F6,  KC_F7,  KC_F8,  KC_F9,  KC_F10, KC_F11, KC_F12, _______,_______,KC_LSFT,_______,_______,
     _______,_______,_______,_______,_______),
 
   [SYS] = LAYOUT( /* Qwerty 101 uskey */
@@ -250,6 +279,9 @@ static uint16_t fnqu_pressed_time = 0;
 
 static bool fnsc_pressed = false;
 static uint16_t fnsc_pressed_time = 0;
+
+static bool fncm_pressed = false;
+static uint16_t fncm_pressed_time = 0;
 
 static uint16_t mod_switch_keycode = false;
 
@@ -373,29 +405,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (keycode != CM_SPFN)  {spfn_pressed = false;}
     if (keycode != CM_FNSC)  {fnsc_pressed = false;}
     if (keycode != CM_FNQU)  {fnqu_pressed = false;}
+    if (keycode != CM_FNCM)  {fncm_pressed = false;}
   }
   switch (keycode) {
     case CM_SPFN:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,SPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JSPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,SPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,USPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_FNQU:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,FN,KC_QUOT,&fnqu_pressed,&fnqu_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,FN,KC_DOT,&fnqu_pressed,&fnqu_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,FN,KC_QUOT,&fnqu_pressed,&fnqu_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,FN,KC_DOT,&fnqu_pressed,&fnqu_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
     case CM_FNSC:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JSYM,JP_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JSYM2,JP_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,USYM,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,USYM2,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+      }
+      return false;
+      break;
+    case CM_FNCM:
+      if (get_highest_layer(default_layer_state)==JBASE){
+        user_lt(record,JSYM,JP_COMM,&fncm_pressed,&fncm_pressed_time,false,&mod_switch_keycode);
+      } else {
+        user_lt(record,USYM,KC_COMM,&fncm_pressed,&fncm_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
@@ -494,6 +535,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         spfn_pressed = false;
         fnqu_pressed = false;
         fnsc_pressed = false;
+        fncm_pressed = false;
       }
       break;
     }

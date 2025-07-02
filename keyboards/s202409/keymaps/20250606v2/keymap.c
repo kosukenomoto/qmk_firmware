@@ -25,8 +25,6 @@
 #define KC_LANG1 KC_LANGUAGE_1
 #define KC_LANG2 KC_LANGUAGE_2
 
-#define CM_CAPS S(JP_EISU)
-#define CM_STAB S(KC_TAB)
 #define CM_JHNZ A(KC_GRV)
 #define CM_UHNZ S(KC_SPC)
 #define DF_JBAS DF(JBASE)
@@ -77,6 +75,8 @@
 //#define ENT_SFT SFT_T(KC_ENT)//KC_MHEN
 #define LN1_CTL LCTL_T(KC_TAB)
 
+#define CM_CAPS S(JP_EISU)
+#define CM_STAB S(KC_TAB)
 #define CM_GUIE G(KC_E)
 #define CM_GUIM G(KC_D)
 #define CM_GUUP G(KC_UP)
@@ -123,31 +123,14 @@ enum custom_keycodes {
     CM_FNSO,
     CM_ALCT,
     SW_ATAB,
+    CM_SHHZ,
+    CM_SHCL,
     CM_K_QY,
     CM_K_QU,
     CM_K_QI,
     CM_K_QO,
     CM_K_QP,
-    MT_RSFT,
-    MT_LSFT,
 };
-
-#define METATAP_MAX_NUM 2
-struct Metatap_State {
-  uint16_t meta;                     // Keycode sent when held
-  bool pressed;                      // Pressed or not
-  bool registered;                   // Registered or not
-  uint16_t pressed_time;             // Time that key is pressed. Used to determine it's tapped
-  uint16_t tapcode[METATAP_MAX_NUM]; // Keycodes array sent when tapped
-};
-
-bool is_metatap_code(uint16_t keycode) {
-  return MT_RSFT <= keycode && keycode <= MT_LSFT;
-}
-
-struct Metatap_State mtjlsft = {KC_LSFT, false, false, 0, {KC_LALT, KC_GRV}};
-struct Metatap_State mtulsft = {KC_LSFT, false, false, 0, {KC_LSFT, KC_SPC}};
-struct Metatap_State mt_rsft = {KC_RSFT, false, false, 0, {KC_LSFT, KC_CAPS}};
 
 //const uint16_t PROGMEM esc_combo[] = {KC_W, KC_E, COMBO_END};
 //const uint16_t PROGMEM guitab_combo[] = {KC_E, KC_R, COMBO_END};
@@ -178,8 +161,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //win jpkey(QMK)  GUI(command)   CTL(control)   ALT(option)
         CM_LEFN, KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
         KC_A,    KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
-        CM_SHTZ, KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
-                          KC_LGUI,  MT_LSFT, KC_LCTL,       CM_SPFN, MT_RSFT, CM_SYS
+        KC_Z,    KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
+                          KC_LGUI,  CM_SHHZ, KC_LCTL,       CM_SPFN, CM_SHCL, CM_SYS
     ),
 
     [UBASE] = LAYOUT_split_3x5_3( /* Qwerty mac uskey */
@@ -187,8 +170,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //mac karabiner(win)  option(ALT)->GUI  command(GUI)->control(CTL)  control(CTL)->option(ALT)
         CM_LEFN, KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
         KC_A,    KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
-        CM_SHTZ, KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
-                          KC_LGUI,  MT_LSFT, KC_LCTL,       CM_SPFN, MT_RSFT, CM_SYS
+        KC_Z,    KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
+                          KC_LGUI,  CM_SHHZ, KC_LCTL,       CM_SPFN, CM_SHCL, CM_SYS
     ),
 
     [JLEF] = LAYOUT_split_3x5_3(
@@ -221,13 +204,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [JFN2] = LAYOUT_split_3x5_3(
         _______,  JP_LPRN,  JP_RPRN,  JP_LBRC,  JP_RBRC,        _______,  _______,  _______,  _______,  _______,
-        JP_QUOT,  JP_DQUO,  JP_MINS,  JP_LCBR,  JP_RCBR,        _______,  _______,  _______,  _______,  _______,
+        JP_QUOT,  JP_DQUO,  JP_MINS,  JP_LCBR,  JP_RCBR,        KC_BTN1,  CM_SF10,  JP_ZKHK,  CM_CAPS,  _______,
         JP_QUES,  JP_COLN,  JP_LABK,  JP_RABK,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
     [UFN2] = LAYOUT_split_3x5_3(
         _______,  KC_LPRN,  KC_RPRN,  KC_LBRC,  KC_RBRC,        _______,  _______,  _______,  _______,  _______,
-        KC_QUOT,  KC_DQUO,  KC_MINS,  KC_LCBR,  KC_RCBR,        _______,  _______,  _______,  _______,  _______,
+        KC_QUOT,  KC_DQUO,  KC_MINS,  KC_LCBR,  KC_RCBR,        KC_BTN1,  CM_SF10,  CM_UHNZ,  CM_CAPS,  _______,
         KC_QUES,  KC_COLN,  KC_LABK,  KC_RABK,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
@@ -262,14 +245,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [JFN] = LAYOUT_split_3x5_3(
         _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
-        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          _______,  _______,  _______,  _______,  _______,
+        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          KC_BTN1,  CM_SF10,  JP_ZKHK,  CM_CAPS,  _______,
         KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,         KC_F11,   KC_F12,   _______,  _______,  KC_LSFT,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [UFN] = LAYOUT_split_3x5_3(
         _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
-        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          _______,  _______,  _______,  _______,  _______,
+        KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,          KC_BTN1,  CM_SF10,  CM_UHNZ,  CM_CAPS,  _______,
         KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,         KC_F11,   KC_F12,   _______,  _______,  KC_LSFT,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
@@ -391,58 +374,44 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record){
 //    }
 //}
 
-bool is_tapped(uint16_t pressed_time, uint16_t released_time) {
-  return TIMER_DIFF_16(released_time, pressed_time) < TAPPING_TERM;
+//static void user_mt_hnzn(keyrecord_t *record, uint16_t modcode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
+//         if (record->event.pressed) {
+//         *modifier_pressed = true;
+//         *modifier_pressed_time = record->event.time;
+//       } else {
+//       	  if (!*modifier_pressed) unregister_code(modcode);
+//          if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+//            if (get_highest_layer(default_layer_state)==JBASE){
+//              SEND_STRING("`");
+//            }else{
+//              SEND_STRING(SS_DOWN(X_LSFT));
+//              SEND_STRING(SS_TAP(X_SPC));
+//              SEND_STRING(SS_UP(X_LSFT));
+//            }
+//          *modifier_pressed = false;
+//          }
+//        }
+//}
+
+static void user_mt_cpslck(keyrecord_t *record, uint16_t modcode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
+         if (record->event.pressed) {
+         *modifier_pressed = true;
+         *modifier_pressed_time = record->event.time;
+       } else {
+       	  if (!*modifier_pressed) unregister_code(modcode);
+          if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+            if (get_highest_layer(default_layer_state)==JBASE){
+              SEND_STRING(SS_TAP(X_CAPS));
+            }else{
+              SEND_STRING(SS_DOWN(X_LSFT));
+              SEND_STRING(SS_TAP(X_CAPS));
+              SEND_STRING(SS_UP(X_LSFT));
+            }
+          *modifier_pressed = false;
+          }
+        }
 }
 
-void handle_metatap(uint16_t keycode, keyrecord_t *record, struct Metatap_State *mt) {
-  if (!is_metatap_code(keycode)) return;
-//  struct Metatap_State *mt;
-//  if (keycode == MT_LGUI) mt = &mt_lgui;
-//  if (keycode == MT_LCTL) mt = &mt_lctl;
-
-  if (record->event.pressed) {
-    mt->pressed = true;
-    mt->pressed_time = record->event.time;
-  } else {
-    if (mt->registered) {
-      unregister_code(mt->meta);
-      unregister_code(mt->meta);
-      mt->registered = false;
-    } else if (mt->pressed &&
-               is_tapped(mt->pressed_time, record->event.time))
-    {
-      //caps_word_off();
-      // Register keycodes defined in mt->tapcode in order
-      for (int i=0; i<METATAP_MAX_NUM;i++) {
-        if (!mt->tapcode[i]) break;
-        register_code(mt->tapcode[i]);
-      }
-      // Unregister keycodes defined in mt->tapcode in reversed order
-      for (int i=METATAP_MAX_NUM-1;i>=0;i--) {
-        if (!mt->tapcode[i]) break;
-        unregister_code(mt->tapcode[i]);
-        unregister_code(mt->tapcode[i]);
-      }
-    }
-    mt->pressed = false;
-  }
-}
-
-void register_meta_if_needed(void) {
-  if (mtjlsft.pressed && !mtjlsft.registered) {
-    register_code(mtjlsft.meta);
-    mtjlsft.registered = true;
-  }
-  if (mtulsft.pressed && !mtulsft.registered) {
-    register_code(mtulsft.meta);
-    mtulsft.registered = true;
-  }
-  if (mt_rsft.pressed && !mt_rsft.registered) {
-    register_code(mt_rsft.meta);
-    mt_rsft.registered = true;
-  }
-}
 
 //ホールド中のキーをMODキーに差し替える。
 //layerの指定が0だったらデフォルトレイヤーでMODキーを動作させる
@@ -459,6 +428,7 @@ static void mod_layer_switch (keyrecord_t *record,
         register_code(*mod_switch_keycode);
     }
 }
+
 
 static void user_lt(keyrecord_t *record,
         int layer,
@@ -490,6 +460,78 @@ static void user_lt(keyrecord_t *record,
     }
 }
 
+//static void user_lt(keyrecord_t *record, int layer, uint16_t keycode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
+//    if (record->event.pressed) {
+//      *modifier_pressed = true;
+//      *modifier_pressed_time = record->event.time;
+//      layer_on(layer);
+//    } else {
+//      layer_off(layer);
+//      if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+//        register_code(keycode);
+//        unregister_code(keycode);
+//        unregister_code(keycode);
+//      }
+//      *modifier_pressed = false;
+//    }
+//}
+
+// static void user_mt(keyrecord_t *record, uint16_t modcode, uint16_t keycode, bool *modifier_pressed, uint16_t *modifier_pressed_time, bool tapping_term_disable) {
+//         if (record->event.pressed) {
+//         *modifier_pressed = true;
+//         *modifier_pressed_time = record->event.time;
+//       } else {
+// 	if (!*modifier_pressed) unregister_code(modcode);
+//         if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+//           register_code(keycode);
+//           unregister_code(keycode);
+//           unregister_code(keycode);
+//         }
+//         *modifier_pressed = false;
+//       }
+// }
+
+//static bool alttab_pressed = false;
+//static void alttab_press(keyrecord_t *record,bool *modifier_pressed){
+//  if (record->event.pressed){
+//    if(!*modifier_pressed){
+//      *modifier_pressed = true;
+//      SEND_STRING(SS_DOWN(X_LALT));
+//      SEND_STRING(SS_TAP(X_TAB));
+//    }else{
+//      *modifier_pressed = false;
+//      SEND_STRING(SS_UP(X_LALT));
+//    }
+//  }
+//}
+//
+//static bool alttab_vm_pressed = false;
+//static void alttab_vm_press(keyrecord_t *record,bool *modifier_pressed){
+//  if (record->event.pressed){
+//    if(!*modifier_pressed){
+//      *modifier_pressed = true;
+//      SEND_STRING(SS_DOWN(X_LCTL));
+//      SEND_STRING(SS_TAP(X_LALT));
+//      SEND_STRING(SS_UP(X_LCTL));
+//      SEND_STRING(SS_DOWN(X_LALT));
+//      SEND_STRING(SS_TAP(X_TAB));
+//    }else{
+//      *modifier_pressed = false;
+//      SEND_STRING(SS_UP(X_LALT));
+//      SEND_STRING(SS_TAP(X_BTN1));
+//    }
+//  }
+//}
+
+
+//static bool shhz_pressed = false;
+//static uint16_t shhz_pressed_time = 0;
+//static bool is_shhz_active = false;
+
+static bool shcl_pressed = false;
+static uint16_t shcl_pressed_time = 0;
+static bool is_shcl_active = false;
+
 static bool spfn_pressed = false;
 static uint16_t spfn_pressed_time = 0;
 
@@ -507,6 +549,17 @@ static uint16_t lefn_pressed_time = 0;
 
 static uint16_t mod_switch_keycode = false;
 
+static bool shift_at_active = false;
+static uint16_t shift_at_timer;
+
+//void matrix_scan_user(void){
+//    // 安全のため：shiftが押されたままになっていたら解除
+//    if (!get_mods() && shift_at_active && !(keyboard_report->mods & MOD_BIT(KC_LSFT))) {
+//        unregister_code(KC_LSFT);
+//        shift_at_active = false;
+//    }
+//}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     // reset the user_lt & user_tt flags
@@ -515,25 +568,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (keycode != CM_LISE) {lise_pressed = false;}
     if (keycode != CM_FNSC) {fnsc_pressed = false;}
     if (keycode != CM_FNSO) {fnso_pressed = false;}
-  }
+//    if (keycode != CM_SHHZ){
+//       if (shhz_pressed) {register_code(KC_LSFT); is_shhz_active = true;}
+//       shhz_pressed  = false;
+//    }
+    if (keycode != CM_SHCL){
+       if (shcl_pressed) {register_code(KC_LSFT); is_shcl_active = true;}
+       shcl_pressed  = false;
+    }
 
+  }
   switch (keycode) {
-    case MT_RSFT:
+    case CM_SHHZ:
+          if (record->event.pressed) {
+                shift_at_timer = timer_read();
+                shift_at_active = true;
+                return false;
+            } else {
+                if (timer_elapsed(shift_at_timer) < TAPPING_TERM) {
+                    // タップなら @ を送る（Shift + 2）
+                    register_code(KC_LSFT);
+                    tap_code(KC_2);
+                    unregister_code(KC_LSFT);
+                } else {
+                    // 長押しだったら Shift を解除
+                    unregister_code(KC_LSFT);
+                }
+                shift_at_active = false;
+                return false;
+            }
+      return false;
+      break;
+    case CM_SHCL:
       if (get_highest_layer(default_layer_state)==JBASE){
-        handle_metatap(keycode, record,&mt_rsft);
+        user_mt_cpslck(record,KC_LSFT,&shcl_pressed,&shcl_pressed_time,false);
       } else {
-        handle_metatap(keycode, record,&mt_rsft);
+        user_mt_cpslck(record,KC_LSFT,&shcl_pressed,&shcl_pressed_time,false);
       }
       return false;
       break;
-    case MT_LSFT:
-      if (get_highest_layer(default_layer_state)==JBASE){
-        handle_metatap(keycode, record,&mtjlsft);
-      } else {
-        handle_metatap(keycode, record,&mtulsft);
-      }
-      return false;
-      break;
+
     case CM_SPFN:
       if (get_highest_layer(default_layer_state)==JBASE){
         user_lt(record,JSPFN,KC_SPC,&spfn_pressed,&spfn_pressed_time,false,&mod_switch_keycode);
@@ -574,6 +648,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+//    case CM_CTAL:
+//      alttab_vm_press(record,&alttab_vm_pressed);
+//      if(record->event.pressed){
+//        SEND_STRING(SS_DOWN(X_LCTL));
+//        SEND_STRING(SS_TAP(X_LALT));
+//        SEND_STRING(SS_UP(X_LCTL));
+//      }else{
+//      }
+//      return false;
+//      break;
+//    case CM_ATAB:
+//      alttab_press(record,&alttab_pressed);
+//      return false;
+//      break;
+//    case CM_HZCL:
+//      if (get_highest_layer(default_layer_state)==JBASE){
+//        user_mt_hnzn(record,KC_LCTL,&hzcl_pressed,&hzcl_pressed_time,false);
+//      } else {
+//        user_mt_hnzn(record,KC_LCTL,&hzcl_pressed,&hzcl_pressed_time,false);
+//      }
+//      return false;
+//      break;
     case CM_LEFT:
       if(record->event.pressed){
         //pressed
@@ -710,7 +806,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         fnsc_pressed = false;
         fnso_pressed = false;
         lefn_pressed = false;
-        register_meta_if_needed();
+//        if (shhz_pressed) {register_code(KC_LSFT); is_shhz_active = true;}
+//        shhz_pressed  = false;
+        if (shcl_pressed) {register_code(KC_LSFT); is_shcl_active = true;}
+        shcl_pressed  = false;
+
       }
       break;
     }
