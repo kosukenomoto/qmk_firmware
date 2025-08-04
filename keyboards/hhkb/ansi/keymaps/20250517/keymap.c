@@ -53,7 +53,7 @@
 #define CM_GUIM G(KC_M)
 #define CM_SF10 S(KC_F10)
 #define CM_WSCS G(S(KC_S))
-#define CM_GUIM G(KC_M)
+#define CM_GUID G(KC_D)
 #define CM_GUP  G(KC_UP)
 #define CM_GDOW G(KC_DOWN)
 
@@ -71,6 +71,8 @@ enum custom_keycodes {
   CM_RGHT,
   CM_UP,
   CM_DOWN,
+  CM_DELE,
+  CM_BSPC,
   CM_SPFN,
   CM_FNSC,
   CM_FNQU,
@@ -97,15 +99,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [JBASE] = LAYOUT( /* Qwerty 106 jpkey */
     KC_ESC, KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   JP_MINS,JP_EQL, JP_BSLS,JP_GRV,
-    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   CM_CAPS,JP_RBRC,KC_BSPC,
-    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,JP_ZKHK,KC_ENT,
+    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   JP_LBRC,JP_RBRC,KC_BSPC,
+    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN,JP_QUOT,KC_ENT,
+//    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,JP_QUOT,KC_ENT,
     KC_LSFT,KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   CM_FNCM,CM_FNQU,SL_ALT, KC_RSFT,LT_SYS,
     KC_LGUI,KC_LALT,CM_SPFN,KC_RALT,KC_RGUI),
 
   [UBASE] = LAYOUT( /* Qwerty 101 uskey */
     KC_ESC, KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINS,KC_EQL, KC_BSLS,KC_GRV,
-    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   CM_CAPS,KC_RBRC,KC_BSPC,
-    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,CM_UHNZ,KC_ENT,
+    KC_TAB, KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   KC_LBRC,KC_RBRC,KC_BSPC,
+    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN,KC_QUOT,KC_ENT,
+//    KC_LCTL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,   KC_H,   KC_J,   KC_K,   KC_L,   CM_FNSC,KC_QUOT,KC_ENT,
     KC_LSFT,KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_N,   KC_M,   CM_FNCM,CM_FNQU,SL_ALT, KC_RSFT,LT_SYS,
     KC_LGUI,KC_LALT,CM_SPFN,KC_RALT,KC_RGUI),
 
@@ -113,14 +117,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,JP_EXLM,JP_AT,  JP_HASH,JP_DLR, JP_PERC,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,JP_UNDS,JP_PLUS,JP_EQL, JP_ASTR,JP_CIRC,_______,_______,_______,_______,_______,_______,_______,
-    _______,JP_BSLS,JP_AMPR,JP_PIPE,JP_TILD,JP_GRV, _______,_______,_______,_______,_______,_______,_______,
+    _______,JP_BSLS,JP_AMPR,JP_PIPE,JP_TILD,JP_GRV, _______,JP_ZKHK,_______,CM_CAPS,_______,_______,_______,
     _______,_______,_______,_______,_______),
 
   [USYM] = LAYOUT( /* Qwerty 101 uskey */
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,KC_EXLM,KC_AT,  KC_HASH,KC_DLR, KC_PERC,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,KC_UNDS,KC_PLUS,KC_EQL, KC_ASTR,KC_CIRC,_______,_______,_______,_______,_______,_______,_______,
-    _______,KC_BSLS,KC_AMPR,KC_PIPE,KC_TILD,KC_GRV, _______,_______,_______,_______,_______,_______,_______,
+    _______,KC_BSLS,KC_AMPR,KC_PIPE,KC_TILD,KC_GRV, _______,CM_UHNZ,_______,CM_CAPS,_______,_______,_______,
     _______,_______,_______,_______,_______),
 
   [JSYM2] = LAYOUT(
@@ -139,14 +143,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [JSPFN] = LAYOUT( /* Qwerty 101 uskey */
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
-    CM_WSCS,_______,CM_ALT4,LT_EXCL,_______,_______,CM_STAB,KC_HOME,KC_UP,  KC_END, KC_TAB, _______,_______,_______,
+    CM_WSCS,CM_GUIE,CM_ALT4,LT_EXCL,CM_GUID,_______,CM_STAB,KC_HOME,KC_UP,  KC_END, KC_TAB, _______,_______,_______,
     _______,KC_LALT,KC_LSFT,KC_DEL, MO_HYPS,KC_LGUI,KC_BSPC,KC_LEFT,KC_DOWN,KC_RGHT,KC_ENT, _______,_______,
     _______,KC_1   ,KC_2   ,KC_3   ,KC_4   ,KC_5   ,KC_6   ,KC_7   ,KC_8   ,KC_9   ,KC_0   ,_______,_______,
     _______,_______,_______,_______,_______),
 
   [USPFN] = LAYOUT( /* Qwerty 101 uskey */
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
-    KC_PSCR,_______,CM_ALT4,LT_EXCL,_______,_______,CM_STAB,KC_HOME,KC_UP,  KC_END, KC_TAB, _______,_______,_______,
+    KC_PSCR,_______,CM_ALT4,LT_EXCL,CM_GUID,_______,CM_STAB,KC_HOME,KC_UP,  KC_END, KC_TAB, _______,_______,_______,
     _______,KC_LALT,KC_LSFT,KC_DEL, MO_HYPS,KC_LGUI,KC_BSPC,KC_LEFT,KC_DOWN,KC_RGHT,KC_ENT, _______,_______,
     _______,KC_1   ,KC_2   ,KC_3   ,KC_4   ,KC_5   ,KC_6   ,KC_7   ,KC_8   ,KC_9   ,KC_0   ,_______,_______,
     _______,_______,_______,_______,_______),
@@ -163,7 +167,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [HYPE] = LAYOUT( /* Qwerty 101 uskey */
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,_______,_______,_______,_______,_______,_______,_______,CM_UP,  _______,_______,_______,_______,_______,
-    _______,_______,_______,_______,_______,_______,_______,CM_LEFT,CM_DOWN,CM_RGHT,_______,_______,_______,
+    _______,_______,_______,CM_DELE,_______,_______,CM_BSPC,CM_LEFT,CM_DOWN,CM_RGHT,_______,_______,_______,
     _______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,
     _______,_______,_______,_______,_______),
 
@@ -525,6 +529,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code(KC_DOWN);
         tap_code(KC_DOWN);
         tap_code(KC_DOWN);
+      }else{
+        //released
+      }
+      break;
+    case CM_BSPC:
+      if(record->event.pressed){
+        //pressed
+        tap_code(KC_BSPC);
+        tap_code(KC_BSPC);
+        tap_code(KC_BSPC);
+        tap_code(KC_BSPC);
+      }else{
+        //released
+      }
+      break;
+    case CM_DELE:
+      if(record->event.pressed){
+        //pressed
+        tap_code(KC_DEL);
+        tap_code(KC_DEL);
+        tap_code(KC_DEL);
+        tap_code(KC_DEL);
       }else{
         //released
       }
