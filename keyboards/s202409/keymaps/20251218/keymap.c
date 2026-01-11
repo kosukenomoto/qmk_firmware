@@ -176,32 +176,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [JBASE] = LAYOUT_split_3x5_3(  /* Qwerty win jpkey */
     //win jpkey(QMK)  GUI(command)   CTL(control)   ALT(option)
-        CM_LEFN, KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
-        KC_A,    KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
+        KC_Q,    KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
+        A_ALT,   KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
         CM_SHTZ, KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
-                          KC_LGUI,  MT_LSFT, KC_LCTL,       CM_SPFN, MT_RSFT, CM_SYS
+                          KC_LGUI,  CM_LEFN, KC_LCTL,       CM_SPFN, MT_RSFT, CM_SYS
     ),
 
     [UBASE] = LAYOUT_split_3x5_3( /* Qwerty mac uskey */
     //mac uskey(QMK)      ALT(option)       GUI(command)                CTL(control)
     //mac karabiner(win)  option(ALT)->GUI  command(GUI)->control(CTL)  control(CTL)->option(ALT)
-        CM_LEFN, KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
-        KC_A,    KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
+        KC_Q,    KC_W,    KC_E,     KC_R,    KC_T,          KC_Y,    KC_U,    KC_I,     KC_O,    KC_P,
+        A_ALT,   KC_S,    KC_D,     KC_F,    KC_G,          KC_H,    KC_J,    KC_K,     KC_L,    CM_FNSC,
         CM_SHTZ, KC_X,    KC_C,     KC_V,    KC_B,          KC_N,    KC_M,    CM_LISE,  CM_FNSO, SL_ALT,
-                          KC_LGUI,  MT_LSFT, KC_LCTL,       CM_SPFN, MT_RSFT, CM_SYS
+                          KC_LGUI,  CM_LEFN, KC_LCTL,       CM_SPFN, MT_RSFT, CM_SYS
     ),
 
     [JLEF] = LAYOUT_split_3x5_3(
-        _______,  CM_ALT4,  KC_ESC,   CM_ALCT,  SW_ATAB,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
-        _______,  _______,  _______,  _______,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
+        _______,  CM_ALT4,  KC_ESC,   CM_GUIT,  CM_WSCS,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
+        _______,  _______,  KC_DEL,   SW_ATAB,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  CM_ALCT,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [ULEF] = LAYOUT_split_3x5_3(
-        _______,  CM_ALT4,  KC_ESC,   CM_ALCT,  SW_ATAB,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
-        _______,  _______,  _______,  _______,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
+        _______,  CM_ALT4,  KC_ESC,   CM_GUIT,  CM_WSCS,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
+        _______,  _______,  KC_DEL,   SW_ATAB,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  CM_ALCT,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
@@ -221,14 +221,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [JFN2] = LAYOUT_split_3x5_3(
         _______,  JP_LPRN,  JP_RPRN,  JP_LBRC,  JP_RBRC,        _______,  _______,  _______,  _______,  _______,
-        JP_QUOT,  JP_DQUO,  JP_MINS,  JP_LCBR,  JP_RCBR,        _______,  _______,  _______,  _______,  _______,
-        JP_QUES,  JP_COLN,  JP_LABK,  JP_RABK,  _______,        _______,  _______,  _______,  _______,  _______,
+        JP_QUOT,  JP_DQUO,  JP_MINS,  JP_LCBR,  JP_RCBR,        CM_SF10,  _______,  _______,  _______,  _______,
+        JP_QUES,  JP_COLN,  JP_LABK,  JP_RABK,  JP_SCLN,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
     [UFN2] = LAYOUT_split_3x5_3(
         _______,  KC_LPRN,  KC_RPRN,  KC_LBRC,  KC_RBRC,        _______,  _______,  _______,  _______,  _______,
-        KC_QUOT,  KC_DQUO,  KC_MINS,  KC_LCBR,  KC_RCBR,        _______,  _______,  _______,  _______,  _______,
-        KC_QUES,  KC_COLN,  KC_LABK,  KC_RABK,  _______,        _______,  _______,  _______,  _______,  _______,
+        KC_QUOT,  KC_DQUO,  KC_MINS,  KC_LCBR,  KC_RCBR,        CM_SF10,  _______,  _______,  _______,  _______,
+        KC_QUES,  KC_COLN,  KC_LABK,  KC_RABK,  KC_SCLN,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
@@ -282,9 +282,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [ALTTAB] = LAYOUT_split_3x5_3(
-        _______,  _______,  _______,  CM_STAB,  KC_TAB,         _______,  _______,  KC_UP,    _______,  _______,
-        _______,  _______,  _______,  _______,  _______,        _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,
-        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  _______,  KC_UP,    _______,  _______,
+        _______,  _______,  _______,  KC_TAB,   _______,        _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,
+        _______,  _______,  _______,  CM_STAB,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     )
 };
@@ -490,6 +490,37 @@ static void user_lt(keyrecord_t *record,
     }
 }
 
+static void user_lt_hnzn(keyrecord_t *record,
+        int layer,
+        uint16_t keycode,
+        bool *modifier_pressed,
+        uint16_t *modifier_pressed_time,
+        bool tapping_term_disable,
+        uint16_t *mod_switch_keycode){  //mod差し替えフラグ兼KEYCODE
+
+    if (record->event.pressed) {
+        *modifier_pressed = true;
+        *modifier_pressed_time = record->event.time;
+        layer_on(layer);
+    } else {
+        //もしMODキー差替有効中だったらMODキーをクリア（レイヤー移動もクリア）
+        if(*mod_switch_keycode){
+            unregister_code(*mod_switch_keycode);
+            //set_mods(get_mods() & ~MOD_BIT(*mod_switch_keycode));
+            *mod_switch_keycode = 0;
+            layer_clear();
+        }
+        layer_off(layer);
+        if (*modifier_pressed && (tapping_term_disable || (timer_elapsed(*modifier_pressed_time) < TAPPING_TERM))) {
+          if (get_highest_layer(default_layer_state)==JBASE){
+            SEND_STRING(SS_LALT("`"));
+          }else{
+            SEND_STRING(SS_LALT("`"));
+          }
+        }
+    *modifier_pressed = false;
+    }
+}
 
 static bool spfn_pressed = false;
 static uint16_t spfn_pressed_time = 0;
@@ -545,9 +576,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case CM_FNSC:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JFN2,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,JFN2,KC_ENT,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,UFN2,KC_SCLN,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
+        user_lt(record,UFN2,KC_ENT,&fnsc_pressed,&fnsc_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
@@ -569,9 +600,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case CM_LEFN:
       if (get_highest_layer(default_layer_state)==JBASE){
-        user_lt(record,JLEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
+        user_lt_hnzn(record,JLEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
       } else {
-        user_lt(record,ULEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
+        user_lt_hnzn(record,ULEF,KC_Q,&lefn_pressed,&lefn_pressed_time,false,&mod_switch_keycode);
       }
       return false;
       break;
