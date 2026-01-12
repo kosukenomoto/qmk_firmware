@@ -192,16 +192,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [JLEF] = LAYOUT_split_3x5_3(
-        _______,  CM_ALT4,  KC_ESC,   CM_GUIT,  CM_WSCS,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
-        _______,  _______,  KC_DEL,   SW_ATAB,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  CM_ALCT,  _______,        _______,  _______,  _______,  _______,  _______,
+        CM_ALCT,  CM_ALT4,  KC_ESC,   SW_ATAB,  CM_WSCS,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
+        _______,  _______,  KC_DEL,   _______,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [ULEF] = LAYOUT_split_3x5_3(
-        _______,  CM_ALT4,  KC_ESC,   CM_GUIT,  CM_WSCS,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
-        _______,  _______,  KC_DEL,   SW_ATAB,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  CM_ALCT,  _______,        _______,  _______,  _______,  _______,  _______,
+        CM_ALCT,  CM_ALT4,  KC_ESC,   SW_ATAB,  CM_WSCS,        CM_K_QY,  CM_K_QU,  CM_K_QI,  CM_K_QO,  CM_K_QP,
+        _______,  _______,  KC_DEL,   _______,  KC_LGUI,        _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
@@ -233,14 +233,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [JSPFN] = LAYOUT_split_3x5_3( /* [> SPFN <] */
-        CM_GUIE,  CM_ALT4,  LT_EXCL,  CM_GUIT,  CM_WSCS,        CM_STAB,  KC_HOME,  KC_UP,    KC_END,   KC_TAB,
+        CM_ALCT,  CM_ALT4,  LT_EXCL,  SW_ATAB,  CM_WSCS,        CM_STAB,  KC_HOME,  KC_UP,    KC_END,   KC_TAB,
         KC_LALT,  KC_LSFT,  KC_DEL,   MO_HYPS,  KC_LGUI,        KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_ENT,
         KC_1,     KC_2,     KC_3,     KC_4,     KC_5,           KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
                             _______,  _______,  _______,        _______,  _______,  _______
     ),
 
     [USPFN] = LAYOUT_split_3x5_3( /* [> SPFN <] */
-        CM_GUIE,  CM_ALT4,  LT_EXCL,  CM_GUIT,  CM_WSCS,        CM_STAB,  KC_HOME,  KC_UP,    KC_END,   KC_TAB,
+        CM_ALCT,  CM_ALT4,  LT_EXCL,  SW_ATAB,  CM_WSCS,        CM_STAB,  KC_HOME,  KC_UP,    KC_END,   KC_TAB,
         KC_LALT,  KC_LSFT,  KC_DEL,   MO_HYPS,  KC_LGUI,        KC_BSPC,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_ENT,
         KC_1,     KC_2,     KC_3,     KC_4,     KC_5,           KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
                             _______,  _______,  _______,        _______,  _______,  _______
@@ -282,9 +282,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [ALTTAB] = LAYOUT_split_3x5_3(
-        _______,  _______,  _______,  _______,  _______,        _______,  _______,  KC_UP,    _______,  _______,
-        _______,  _______,  _______,  KC_TAB,   _______,        _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,
-        _______,  _______,  _______,  CM_STAB,  _______,        _______,  _______,  _______,  _______,  _______,
+        CM_STAB,  _______,  _______,  KC_TAB,   _______,        _______,  _______,  KC_UP,    _______,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,
+        _______,  _______,  _______,  _______,  _______,        _______,  _______,  _______,  _______,  _______,
                             _______,  _______,  _______,        _______,  _______,  _______
     )
 };
